@@ -1,0 +1,510 @@
+<!-- 
+    File: journal.html
+    Project: ZenConnect - Group 12
+    Course: UIC - CS422
+    Author: Oli Kosiacki
+
+    Purpose: This HTML page serves as a journal application interface. It allows users to record and manage their daily journal entries about their meditation sessions including time stamps, mood levels, focus areas, thoughts, accomplishments, improvements and other notes.
+
+    Features:
+    - Calendar: Users can navigate through months and select dates to view their journal entries.
+    - Journal Entries: Users can view, add, edit and delete journal entries for selected dates.
+    - Journal Entry Textboxes: Users can input various details such as meditation start and end times, location, type, mantra, exercises, mood level, focus, thoughts, accomplishments, improvements and additional notes.
+    - Navigation Buttons: Users can navigate between journal entries as well as months using the provided previous and next buttons.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Journal</title>
+    </head>
+
+    <style>
+
+        :root {
+            --calendar-margin-top: 100px; 
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px; 
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #888; 
+            border-radius: 5px;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #CFE2F3;
+            display: flex; 
+            justify-content: center; 
+            height: 100vh;
+        }
+        
+        .calendar {
+            max-width: 600px;
+            margin: 20px auto;
+            border: 1px solid rgb(0, 0, 0);
+            overflow: hidden;
+        }
+
+        .calendar-header {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .days-of-week {
+            display: flex;
+            justify-content: space-between;
+            background-color: #CFE2F3;
+        }
+
+        .day-of-week {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border-bottom: 1px solid rgb(0, 0, 0);
+            color: #333;
+            font-weight: bold;
+        }
+
+        .day.selected-day {
+            background-color: rgb(234, 209, 220);
+        }
+
+        #current-month-year {
+            color: rgb(56, 118, 29);
+        }
+
+        #prevMonthBtn, #nextMonthBtn, #prevJournal, #nextJournal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .container {
+            display: flex;
+            flex: 1;
+            justify-content: space-between;
+            width: 100%;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .calendar-body {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+        }
+
+        #calendar-container {
+            text-align: center; 
+            margin: 10px; 
+            margin-top: var(--calendar-margin-top);
+            width: 50%; 
+            max-height: 500px; 
+        }
+
+        #journal-container {
+            text-align: center; 
+            margin: 30px; 
+            margin-top: calc(var(--calendar-margin-top) + 20px);
+            width: 50%; 
+            max-height: 500px; 
+            overflow-y: auto; 
+            background-color: rgb(234, 209, 220);
+            border: 1px solid rgb(0, 0, 0); 
+            border-radius: 10px; 
+        }
+
+        .day {
+            padding: 10px;
+            border-right: 1px solid rgb(0, 0, 0);
+            border-bottom: 1px solid rgb(0, 0, 0);
+            background-color: #B6D7A8;
+        }
+
+        .day:nth-child(7n), .day:nth-child(7n+1) {
+            color: red; /* highlight weekends */
+        }
+
+        #date-time-container {
+            max-height: 50px; 
+            height: 50px;
+            width: 600px;
+            margin: 0 auto;
+            text-align: center; 
+            padding: 10px;
+            border: 1px solid rgb(0, 0, 0); ;
+            margin-top: 10px;
+
+        }
+
+        label {
+            display: block;
+            padding: 5px;
+            text-align: center;
+        }
+
+        textarea {
+            width: 500px;
+            height: 250px;
+            box-sizing: border-box;
+            margin-top: 5px;
+            text-align: left;
+        }
+
+    </style>
+
+<body>
+
+        <div id="calendar-container">
+            <div class="calendar">
+
+                <div class="calendar-header">
+                    <button id="prevMonthBtn">&lt;</button>
+                        <h2 id="current-month-year"></h2>
+                    <button id="nextMonthBtn">&gt;</button>
+                </div>
+
+                <div class="days-of-week">
+                    <div class="day-of-week">S</div>
+                    <div class="day-of-week">M</div>
+                    <div class="day-of-week">T</div>
+                    <div class="day-of-week">W</div>
+                    <div class="day-of-week">T</div>
+                    <div class="day-of-week">F</div>
+                    <div class="day-of-week">S</div>
+                </div>
+
+                <div class="calendar-body" id="calendar-body">
+                    
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="journal-container">
+
+            <div class="calendar-header">
+                <button id="prevJournal">&lt;</button>
+                    <h2 id="journal-date"><u>Journal</u></h2>
+                <button id="nextJournal">&gt;</button>
+            </div>
+
+            <div>
+                <label for="start-time">Meditation Start Time:</label>
+                <input type="text" id="start-time">
+            </div>
+            <div>
+                <label for="end-time">Meditation End Time:</label>
+                <input type="text" id="end-time">
+            </div>
+            <div>
+                <label for="location">Location:</label>
+                <input type="text" id="location">
+            </div>
+            <div>
+                <label for="type">Type:</label>
+                <input type="text" id="type">
+            </div>
+            <div>
+                <label for="mantra">Mantra:</label>
+                <input type="text" id="mantra">
+            </div>
+            <div>
+                <label for="exercises">Exercises:</label>
+                <input type="text" id="exercises">
+            </div>
+            <div>
+                <label for="mood-wheel">Mood Level:</label>
+                <input type="range" id="mood-wheel" min="0" max="100">
+            </div>
+            <div>
+                <label for="focus">Focus:</label>
+                <textarea id="focus"></textarea>
+            </div>
+            <div>
+                <label for="thoughts">Thoughts/Insights:</label>
+                <textarea id="thoughts"></textarea>
+            </div>
+            <div>
+                <label for="accomplishments">Accomplishments:</label>
+                <textarea id="accomplishments"></textarea>
+            </div>
+            <div>
+                <label for="improvements">Improvements:</label>
+                <textarea id="improvements"></textarea>
+            </div>
+            <div>
+                <label for="notes">Other Notes:</label>
+                <textarea id="notes"></textarea>
+            </div>
+
+            <button id="saveButton">Save</button>
+            <button id="newJournalButton">New Journal</button>
+            <button id="deleteJournalButton">Delete Journal</button>
+            
+        </div>
+
+<script>
+    // global variables
+    const journalEntries = new Map();  
+    var currentJournalNum = 1;
+    var selectedCurrentDate = '';
+
+    // function to dynamically create the calendar 
+    function generateCalendar(year, month) {
+        // get the current date 
+        const currentDate = new Date(); 
+        const currentYear = currentDate.getFullYear();
+        const currentMonth = currentDate.getMonth();
+        const currentDay = currentDate.getDate();
+
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const firstDayOfMonth = new Date(year, month, 1).getDay();
+        const lastDayOfMonth = new Date(year, month + 1, 0).getDay();
+        
+        const calendarBody = document.getElementById("calendar-body");
+        calendarBody.innerHTML = "";
+        
+        const header = document.getElementById("current-month-year");
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        header.innerText = months[month] + " " + year;
+        
+        // empty boxes for days before the first day of the month
+        for (let i = 0; i < firstDayOfMonth; i++) {
+            const emptyBox = document.createElement("div");
+            emptyBox.classList.add("day");
+            calendarBody.appendChild(emptyBox);
+        }
+        
+        // boxes for each day of the month
+        for (let day = 1; day <= daysInMonth; day++) {
+
+            const box = document.createElement("div");
+            box.classList.add("day");
+            box.innerText = day;
+            if ((firstDayOfMonth + day - 1) % 7 === 6 || (firstDayOfMonth + day - 1) % 7 === 0) {
+                box.classList.add("weekend");
+            }
+
+            // event listener to each day box for clickable property
+            box.addEventListener("click", function() {
+                selectedDate = new Date(year, month, day);
+                //updateSelectedDate(selectedDate.toISOString().split('T')[0]);
+                const selectedDay = document.querySelector('.selected-day');
+                if (selectedDay) {
+                    selectedDay.classList.remove('selected-day');
+                }
+
+                box.classList.add('selected-day');
+
+                currentJournalNum = 1;
+                selectedCurrentDate = `${selectedDate.toLocaleDateString('en-US')}`;
+                
+                const journalContainer = document.getElementById('journal-container');
+                const goalText = `Journal ${currentJournalNum} For ${selectedDate.toLocaleDateString('en-US')}`;
+                const existingHeader = document.querySelector('#journal-container h2');
+                existingHeader.textContent = `${goalText}`; 
+
+                displayJournalEntry();
+
+            });
+
+            calendarBody.appendChild(box);
+
+            if (year === currentYear && month === currentMonth && day === currentDay) box.click();
+
+        }
+
+        // empty boxes for days after the last day of the month
+        const remainingEmptyBoxes = 6 - lastDayOfMonth; // 6 because Sunday is 0
+        for (let i = 0; i < remainingEmptyBoxes; i++) {
+            const emptyBox = document.createElement("div");
+            emptyBox.classList.add("day");
+            calendarBody.appendChild(emptyBox);
+        }
+
+    }
+    
+    // function to handle saving journal entries
+    function saveJournal() {
+        // retrieve values from form fields
+        const id = currentJournalNum;
+        const startTime = document.getElementById("start-time").value;
+        const endTime = document.getElementById("end-time").value;
+        const location = document.getElementById("location").value;
+        const type = document.getElementById("type").value;
+        const mantra = document.getElementById("mantra").value;
+        const exercises = document.getElementById("exercises").value;
+        const moodLevel = document.getElementById("mood-wheel").value;
+        const focus = document.getElementById("focus").value;
+        const thoughts = document.getElementById("thoughts").value;
+        const accomplishments = document.getElementById("accomplishments").value;
+        const improvements = document.getElementById("improvements").value;
+        const notes = document.getElementById("notes").value;
+
+        // create journal entry object
+        const journalEntry = {
+            startTime,
+            endTime,
+            location,
+            type,
+            mantra,
+            exercises,
+            moodLevel,
+            focus,
+            thoughts,
+            accomplishments,
+            improvements,
+            notes
+        };
+
+        const dateKey = selectedCurrentDate;
+
+        // check if the global map already contains an entry for the selected date
+        if (!journalEntries.has(dateKey)) journalEntries.set(dateKey, new Map()); // initialize a map for the date if it doesn't exist
+
+        // store the journal entry in the map corresponding to the selected date with id as the key
+        journalEntries.get(dateKey).set(id, journalEntry);
+        scrollToTop();
+
+        console.log("Journal Entries:", journalEntries);
+
+    }
+
+    // function to create a new journal entry (does nothing if user did not save anything new)
+    function newJournal() {
+        // update the current journal number
+        currentJournalNum = journalEntries.has(selectedCurrentDate) ? journalEntries.get(selectedCurrentDate).size + 1 : 1;
+
+        // clear the form fields
+        document.getElementById("start-time").value = "";
+        document.getElementById("end-time").value = "";
+        document.getElementById("location").value = "";
+        document.getElementById("type").value = "";
+        document.getElementById("mantra").value = "";
+        document.getElementById("exercises").value = "";
+        document.getElementById("mood-wheel").value = "";
+        document.getElementById("focus").value = "";
+        document.getElementById("thoughts").value = "";
+        document.getElementById("accomplishments").value = "";
+        document.getElementById("improvements").value = "";
+        document.getElementById("notes").value = "";
+
+        // update the header to reflect the new journal number 
+        const header = document.querySelector('#journal-container h2');
+        header.textContent = `Journal ${currentJournalNum} For ${selectedCurrentDate}`;
+        scrollToTop();
+    }
+
+    // function to delete the current journal entry (does nothing if there are no entries to delete)
+    function deleteJournal() {
+        if (journalEntries.has(selectedCurrentDate)) {
+            const dateMap = journalEntries.get(selectedCurrentDate);
+            if (dateMap.has(currentJournalNum)) {
+                dateMap.delete(currentJournalNum);
+                console.log(`Deleted entry with ID ${currentJournalNum} for date ${selectedCurrentDate}`);
+            } else {
+                console.log(`No entry found with ID ${currentJournalNum} for date ${selectedCurrentDate}`);
+            }
+            scrollToTop();
+        } else {
+            console.log(`No entries found for date ${selectedCurrentDate}`);
+        }
+    }
+
+    // function to display the current journal entry 
+    function displayJournalEntry() {
+        const dateMap = journalEntries.get(selectedCurrentDate);
+        if (dateMap) {
+            const entry = dateMap.get(currentJournalNum);
+            if (entry) {
+                document.getElementById("start-time").value = entry.startTime;
+                document.getElementById("end-time").value = entry.endTime;
+                document.getElementById("location").value = entry.location;
+                document.getElementById("type").value = entry.type;
+                document.getElementById("mantra").value = entry.mantra;
+                document.getElementById("exercises").value = entry.exercises;
+                document.getElementById("mood-wheel").value = entry.moodLevel;
+                document.getElementById("focus").value = entry.focus;
+                document.getElementById("thoughts").value = entry.thoughts;
+                document.getElementById("accomplishments").value = entry.accomplishments;
+                document.getElementById("improvements").value = entry.improvements;
+                document.getElementById("notes").value = entry.notes;
+                document.getElementById("journal-date").innerText = `Journal ${currentJournalNum} For ${selectedCurrentDate}`;
+            }
+        }
+    }
+
+    // function to go to the previous journal entry
+    function prevJournal() {
+        if (currentJournalNum > 1) {
+            currentJournalNum--;
+            displayJournalEntry();
+        }
+    }
+
+    // function to go to the next journal entry
+    function nextJournal() {
+        const totalEntries = journalEntries.get(selectedCurrentDate) ? journalEntries.get(selectedCurrentDate).size : 0;
+        if (currentJournalNum < totalEntries) {
+            currentJournalNum++;
+            displayJournalEntry();
+        }
+    }
+
+    // function to scroll to the top of the journal entries container
+    function scrollToTop() {
+        const journalEntriesDiv = document.getElementById("journal-container");
+        journalEntriesDiv.scrollTop = 0;
+    }
+
+    // on page load, generate the calender and attach event listeners
+    document.addEventListener("DOMContentLoaded", function() {
+
+        let currentDate = new Date();
+        generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+
+        // add event listeners to previous and next month buttons
+        document.getElementById("prevMonthBtn").addEventListener("click", function() {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+        });
+        document.getElementById("nextMonthBtn").addEventListener("click", function() {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+        });
+
+        document.getElementById("saveButton").addEventListener("click", saveJournal);
+
+        document.getElementById("newJournalButton").addEventListener("click", newJournal); 
+
+        document.getElementById("deleteJournalButton").addEventListener("click", deleteJournal); 
+
+        document.getElementById("prevJournal").addEventListener("click", prevJournal);
+    
+        document.getElementById("nextJournal").addEventListener("click", nextJournal);
+
+    });
+
+</script>
+
+</body>
+</html>
