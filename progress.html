@@ -1,0 +1,479 @@
+<!-- 
+    File: progress.html
+    Project: ZenConnect - Group 12
+    Course: UIC - CS422
+    Author: Oli Kosiacki
+
+    Purpose: This HTML page serves as a personal meditation progress tracker, allowing users to set and monitor weekly goals, track their progress, and mark goals as completed.
+
+    Features:
+    - Set a custom amount of goal hours for the week.
+    - Create, save, delete and complete weekly goals.
+    - Visually see their progress on a bar meter and recieve tooltips on progress towards weekly goals.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Progress</title>
+    </head>
+
+    <style>
+
+        :root {
+            --calendar-margin-top: 100px; 
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px; 
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #888; 
+            border-radius: 5px;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #CFE2F3;
+            display: inline-block; 
+            justify-content: center; 
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .progress-container {
+            height: 30%;
+            width: 80%;
+            padding: 5px;
+            margin: 50px;
+            margin-top: 100px;
+            margin-bottom: 0px;
+        }
+
+        .progress-box {
+            height: 20%;
+            width: 100%;
+            background-color: rgb(217, 234, 211);
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 5px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: rgb(182, 215, 168);
+            border-radius: 10px;
+            width: 0; 
+            transition: width 0.5s ease-in-out; /* animation */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .goal-container {
+            height: 50%;
+            width: 100%;
+            padding: 5px;
+            margin: 50px;
+            display: flex;
+            margin-top: 0px;
+        }
+
+        .goals-container {
+            border: 2px solid #333333; 
+            border-radius: 10px; 
+            padding: 20px;
+            margin-top: 20px; 
+            width: 100%; 
+            height: 80%;
+        }
+        
+        .goal-menu {
+            display: block;
+            justify-content: center;
+            align-items: center; 
+            margin: 50px;
+            margin-top: 0%;
+            text-align: center;
+        }
+        
+        .set-goal-menu {
+            display: block;
+            justify-content: center;
+            align-items: center; 
+            margin: 50px;
+            margin-top: 5%;
+            margin-left: 10%;
+            margin-right: 0%;
+        }
+
+        .goal-header {
+            flex: 1;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #prevGoal, #nextGoal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        #increase, #decrease {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            transform: rotate(90deg);
+            margin-left: 34%;
+            margin-right: 34%;
+        }
+
+        .dropdown {
+            margin-top: 25px;
+            min-width: 105px;
+            position: relative;
+            display: inline-block;
+            margin-left: 29%;
+            margin-right: 29%;
+            cursor: pointer;
+        }
+
+        #dropbtn {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 105px;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content .dropdown-option {
+            color: black;
+            padding: 12px 16px;
+            width: 100%;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .dropdown-content .dropdown-option:hover {
+            background-color: #f1f1f1;
+        }
+
+        .show {
+            display: block;
+            width: 100%;
+        }
+
+        label {
+            display: block;
+            padding: 5px;
+            text-align: center;
+        }
+
+
+    </style>
+
+<body>
+
+        <div class="progress-container">
+            <h2 id="progress"><u>Progress</u></h2>
+            <div class="progress-box">
+                <div class="progress-bar" data-progress="0%">
+                    <h3 id="percent-indicator">0/0</h3>
+                </div>
+            </div>
+            <h2 id="progress-notif">0% has been completed!</h2>
+        </div>
+
+
+        <div class="goal-container">
+            
+            <div class="goal-menu">
+                <h2 id="progress-notif">Weekly Goals</h2>
+
+                <div class="goals-container">
+
+                    <div class="goal-header">
+                        <button id="prevGoal">&lt;</button>
+                            <h3 id="goal-num">Goal 1</h3>
+                        <button id="nextGoal">&gt;</button>
+                    </div>
+
+                    <div>
+                        <label for="goal-type">Meditation Type:</label>
+                        <input type="text" id="goal-type">
+                    </div>
+
+                    <div>
+                        <label for="goal-time">Duration (in mins)</label>
+                        <input type="number" min="0" id="goal-time">
+                    </div>
+
+                    <br></br>
+                    <button id="saveButton">Save Goal</button>
+                    <button id="newGoalButton">New Goal</button>
+                    <button id="deleteGoalButton">Delete Goal</button>
+                    <button id="completeGoalButton">Complete Goal</button>
+                    
+                    <h3 id="tooltips"></h3>
+
+                </div> 
+
+
+            </div>
+
+            <div class="set-goal-menu">
+                <button id="increase">&lt;</button>
+                    <h2 id="progress-display">My goal is 0 minutes per week</h2>
+                <button id="decrease">&gt;</button>
+
+                <div class="dropdown">
+                    <button class="dropbtn">Intervals</button>
+                    <div class="dropdown-content">
+                        <button class="dropdown-option" id="option1" data-value="1">1 minute</button>
+                        <button class="dropdown-option" id="option2" data-value="5">5 minutes</button>
+                        <button class="dropdown-option" id="option3" data-value="30">30 minutes</button>
+                        <button class="dropdown-option" id="option4" data-value="60">60 minutes</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+<script>
+    // global variables
+    const goalEntries = new Map(); 
+    var currentProgress = 0; 
+    var userGoal = 0;
+    // currentProgress / userGoal = %
+    var currentInterval = 5;
+    var currentGoalNum = 1;
+
+    function updateGoalDisplay() {
+        // update the goal display text
+        document.getElementById('goal-num').textContent = 'Goal ' + currentGoalNum;
+        if (goalEntries.has('Goal ' + currentGoalNum)) {
+            document.getElementById('goal-type').value = goalEntries.get('Goal ' + currentGoalNum).type;
+            document.getElementById('goal-time').value = goalEntries.get('Goal ' + currentGoalNum).duration;
+        }
+        if (userGoal == 1) document.getElementById('progress-display').textContent = "My goal is " + userGoal + " minute per week";
+        else document.getElementById('progress-display').textContent = "My goal is " + userGoal + " minutes per week";
+
+        // update the progress indicator
+        document.getElementById('percent-indicator').textContent = `${currentProgress}/${userGoal}`;
+
+        // calculate progress value
+        let progressValue;
+        if (userGoal !== 0) progressValue = (currentProgress / userGoal) * 100; // calculate progress percentage
+        else progressValue = currentProgress > userGoal ? 100 : 0; // handle division by zero
+        progressValue = Math.min(progressValue, 100);
+
+        // update progress bar
+        const progressBar = document.querySelector('.progress-bar');
+        progressBar.setAttribute('data-progress', `${progressValue}%`);
+        progressBar.style.width = progressValue + '%';
+
+        //console.log(goalEntries);
+    }
+
+    function handleOptionClick(value) {
+        currentInterval = value;
+        updateGoalDisplay();
+    }
+    
+    // on page load, generate the calender and attach event listeners
+    document.addEventListener("DOMContentLoaded", function() {
+
+        var progressBar = document.querySelector('.progress-bar');
+        var progressValue = progressBar.getAttribute('data-progress');
+        progressBar.style.width = progressValue;
+
+        document.querySelector('.dropbtn').addEventListener('click', function() {
+            document.querySelector('.dropdown-content').classList.toggle('show');
+        });
+
+        document.querySelector('.dropdown-content').addEventListener('click', function() {
+            document.querySelector('.dropdown-content').classList.toggle('show');
+        });
+
+        document.getElementById('increase').addEventListener('click', function() {
+            userGoal += currentInterval;
+            updateGoalDisplay();
+        });
+
+        document.getElementById('decrease').addEventListener('click', function() {
+            if (userGoal > 0 && userGoal >= currentInterval) {
+                userGoal -= currentInterval; 
+                updateGoalDisplay();
+            }
+            else {
+                userGoal = 0;
+                updateGoalDisplay();
+            }
+        });
+
+        // add event listeners for dropdown options
+        document.getElementById('option1').addEventListener('click', function() {
+            handleOptionClick(1);
+        });
+
+        document.getElementById('option2').addEventListener('click', function() {
+            handleOptionClick(5);
+        });
+
+        document.getElementById('option3').addEventListener('click', function() {
+            handleOptionClick(30);
+        });
+
+        document.getElementById('option4').addEventListener('click', function() {
+            handleOptionClick(60);
+        });
+
+        document.getElementById('prevGoal').addEventListener('click', function() {
+            if (currentGoalNum > 1) {
+                currentGoalNum--;
+                updateGoalDisplay();
+            }
+        });
+
+        document.getElementById('nextGoal').addEventListener('click', function() {
+            if (currentGoalNum < goalEntries.size) {
+                currentGoalNum++;
+                updateGoalDisplay();
+            }
+        });
+
+        document.getElementById('saveButton').addEventListener('click', function() {
+            // get values from input fields
+            //const goalName = document.getElementById('goal-name').value.trim();
+            const meditationType = document.getElementById('goal-type').value.trim();
+            const duration = parseInt(document.getElementById('goal-time').value.trim());
+
+            // check if all fields are filled out
+            if (meditationType && duration > 0) {
+                // save goal
+                const goal = {
+                    //name: goalName,
+                    type: meditationType,
+                    duration: duration
+                };
+
+                // store the goal information
+                goalEntries.set('Goal ' + (currentGoalNum), goal);
+
+                // update goal display
+                updateGoalDisplay();
+
+                // update tooltip message
+                document.getElementById('tooltips').textContent = "New goal saved!";
+
+            } else {
+                // display error message for missing fields
+                document.getElementById('tooltips').textContent = "Please fill out all fields correctly.";
+            }
+        });
+
+        document.getElementById('newGoalButton').addEventListener('click', function() {
+            // update the current goal number
+            currentGoalNum = goalEntries.size + 1;
+            
+            // clear input fields for a new goal
+            document.getElementById('goal-type').value = '';
+            document.getElementById('goal-time').value = '';
+            
+            // update goal display
+            updateGoalDisplay();
+
+            // update tooltip message
+            document.getElementById('tooltips').textContent = "New goal created!";
+        });
+
+        document.getElementById('deleteGoalButton').addEventListener('click', function() {
+            // get the index of the currently displayed goal
+            const goalKey = 'Goal ' + currentGoalNum;
+            
+            // remove the goal entry from the goalEntries map
+            goalEntries.delete(goalKey);
+
+            // clear input fields for a new goal
+            document.getElementById('goal-type').value = '';
+            document.getElementById('goal-time').value = '';
+            
+            // update the display
+            updateGoalDisplay();
+
+            // update tooltip message
+            document.getElementById('tooltips').textContent = "Current goal deleted!";
+        });
+
+        document.getElementById('completeGoalButton').addEventListener('click', function() {
+            // get current progress
+            const progressBar = document.querySelector('.progress-bar');
+            const progressValue = parseInt(progressBar.getAttribute('data-progress').replace('%', ''));
+
+            // get values from input fields
+            //const goalName = document.getElementById('goal-name').value.trim();
+            const meditationType = document.getElementById('goal-type').value.trim();
+            const duration = parseInt(document.getElementById('goal-time').value.trim());
+
+            // check if all fields are filled out and if duration is valid
+            if (meditationType && duration > 0) {
+                // update progress
+                currentProgress += duration;
+                const newProgress = Math.round((currentProgress / userGoal) * 100);
+
+                // cap the progress at 100%
+                const finalProgress = Math.min(newProgress, 100);
+
+                // display completion message
+                if (finalProgress == 100) document.getElementById('progress-notif').textContent = `Goal ${currentGoalNum} of "${meditationType}" completed! You reached your goal for this week, congrats!`;
+                else document.getElementById('progress-notif').textContent = `Goal ${currentGoalNum} of "${meditationType}" completed! You are ${finalProgress}% to reaching your goal for this week!`;
+
+                // reset input fields
+                //document.getElementById('goal-name').value = '';
+                //document.getElementById('goal-type').value = '';
+                //document.getElementById('goal-time').value = '';
+
+                // update the display
+                updateGoalDisplay();
+
+                // update tooltip message
+                document.getElementById('tooltips').textContent = "Current goal completed!";
+                
+            } else {
+                // display error message for missing or invalid fields
+                document.getElementById('tooltips').textContent = "Please fill out all fields correctly.";
+            }
+        });
+        
+    });
+
+</script>
+
+</body>
+</html>
