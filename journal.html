@@ -207,6 +207,8 @@
                 <button id="nextJournal">&gt;</button>
             </div>
 
+            <h3 id="tooltips"></h3>
+
             <div>
                 <label for="start-time">Meditation Start Time:</label>
                 <input type="text" id="start-time">
@@ -256,10 +258,10 @@
                 <textarea id="notes"></textarea>
             </div>
 
-            <button id="saveButton">Save</button>
+            <button id="saveButton">Save Goal</button>
             <button id="newJournalButton">New Journal</button>
             <button id="deleteJournalButton">Delete Journal</button>
-            
+
         </div>
 
 <script>
@@ -385,7 +387,10 @@
         journalEntries.get(dateKey).set(id, journalEntry);
         scrollToTop();
 
-        console.log("Journal Entries:", journalEntries);
+        // update tooltip message
+        document.getElementById('tooltips').textContent = "Journal entry saved!";
+
+        //console.log("Journal Entries:", journalEntries);
 
     }
 
@@ -412,10 +417,15 @@
         const header = document.querySelector('#journal-container h2');
         header.textContent = `Journal ${currentJournalNum} For ${selectedCurrentDate}`;
         scrollToTop();
+
+        // update tooltip message
+        document.getElementById('tooltips').textContent = "New Journal entry created!";
+
     }
 
     // function to delete the current journal entry (does nothing if there are no entries to delete)
     function deleteJournal() {
+        scrollToTop();
         if (journalEntries.has(selectedCurrentDate)) {
             const dateMap = journalEntries.get(selectedCurrentDate);
             if (dateMap.has(currentJournalNum)) {
@@ -424,14 +434,14 @@
             } else {
                 console.log(`No entry found with ID ${currentJournalNum} for date ${selectedCurrentDate}`);
             }
-            scrollToTop();
-        } else {
-            console.log(`No entries found for date ${selectedCurrentDate}`);
-        }
+            // update tooltip message
+            document.getElementById('tooltips').textContent = "Journal entry deleted!";
+        } else document.getElementById('tooltips').textContent = "No journal entry to delete...";
     }
 
     // function to display the current journal entry 
     function displayJournalEntry() {
+        scrollToTop();
         const dateMap = journalEntries.get(selectedCurrentDate);
         if (dateMap) {
             const entry = dateMap.get(currentJournalNum);
@@ -451,6 +461,8 @@
                 document.getElementById("journal-date").innerText = `Journal ${currentJournalNum} For ${selectedCurrentDate}`;
             }
         }
+        // update tooltip message
+        document.getElementById('tooltips').textContent = "";
     }
 
     // function to go to the previous journal entry
