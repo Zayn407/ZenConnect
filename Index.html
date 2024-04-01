@@ -22,9 +22,15 @@
 <style>
   body {
     font-family: 'Comic Sans MS', sans-serif;
-    background-color: #999999; /* RGB: 153, 153, 153 */
     margin: 0;
     padding: 0;
+    background-image: url('images/welcomeImage.jpg'); /* Adjust path as necessary */
+    background-size: cover; /* Cover the entire page */
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-attachment: fixed; /* Keep the image fixed during scroll */
+    height: 100%; /* Ensure the body takes minimum full viewport height */
+    min-height: 100vh; /* Minimum height of 100% of the viewport height */
   }
   .welcome-container {
     background-color: #cfe2f3; /* RGB: 207, 226, 243 */
@@ -41,7 +47,7 @@
     font-weight: bold;
   }
   .user-bar {
-    background-color: #999999; /* RGB: 153, 153, 153 */
+    background-color: rgba(153, 153, 153, 0.7); /* Gray with 70% opacity */
     padding: 10px 20px;
     position: relative;
     z-index: 1000; /* Ensures the user bar stays above other content */
@@ -107,11 +113,11 @@
     <span class="avatar"></span>
     <span class="username">Username »
       <div class="dropdown-content">
-        <a href="#goals">Goals</a>
-        <a href="#journal">Journal</a>
-        <a href="#chat">Chat</a>
-        <a href="#meditation">Meditation</a>
-        <a href="#exploration">Exploration</a>
+        <a href="progress.html">Goals</a> <!-- Updated Goals link -->
+        <a href="journal.html">Journal</a> <!-- Updated Journal link -->
+        <a href="social_page.html">Chat</a> <!-- Updated Chat link -->
+        <a href="meetingAndMeditation.html">Meditation</a> <!-- Local file for Meditation -->
+        <a href="exploration.html">Exploration</a> <!-- Updated Exploration link -->
       </div>
     </span>
   </div>
