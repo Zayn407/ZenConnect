@@ -1,0 +1,79 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #e8e8e8;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: white;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .status-section, .search-section {
+    flex: 1; /* Allows both sections to take up equal space */
+  }
+  
+  #status-input {
+    width: 70%;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  #search-input {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  .main-content {
+    display: flex;
+    margin-top: 20px;
+  }
+  
+  .social-feed, .recommendations {
+    flex: 1; /* Both sections take up equal space */
+    padding: 20px;
+  }
+  
+  .social-feed {
+    border-right: 1px solid #ccc;
+  }
+  
+  .post, .recommendation {
+    background: #fff;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .post h3, .recommendation p {
+    margin: 0;
+    padding-bottom: 5px;
+  }
+  
+  .post p, .recommendation p {
+    margin-top: 5px;
+  }
+  

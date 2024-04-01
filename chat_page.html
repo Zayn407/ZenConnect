@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Interface</title>
+    <link rel="stylesheet" href="chat_styles.css">
+</head>
+<body>
+
+<div class="chat-container">
+    <div class="sidebar">
+        <div class="contacts">
+            <h3>CONTACTS</h3>
+            <ul id="contacts-list">
+                <!-- Contacts will be added here by JavaScript -->
+            </ul>
+        </div>
+        <div class="invites">
+            <button id="add-friend-btn">Add Friend</button>
+        </div>
+    </div>
+
+    <div class="chat-area">
+        <h2 id="chat-title" class="chat-title">Select a contact to start chatting</h2>
+        <div id="chat-messages" class="chat-messages">
+            <!-- Chat messages will be shown here -->
+        </div>
+        <div class="chat-box">
+            <input type="text" id="message-input" placeholder="Type a message...">
+            <button id="send-btn">Send</button>
+        </div>
+    </div>
+
+    <div class="options">
+        <!-- Options elements here -->
+    </div>
+</div>
+
+<script src="chat_scripts.js"></script>
+</body>
+</html>

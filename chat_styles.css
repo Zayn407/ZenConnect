@@ -1,0 +1,104 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #e8e8e8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden; /* Prevent body scroll */
+  }
+  
+  .chat-container {
+    display: flex;
+    width: 1200px; /* Set a fixed width for the entire container */
+    height: 600px; /* Set a fixed height for the entire container */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    background-color: #fff;
+    border-radius: 8px;
+  }
+  
+  .sidebar {
+    width: 250px; /* Set a fixed width for the sidebar */
+    background-color: #f0f0f0;
+    padding: 20px;
+    overflow-y: auto; /* Allows scrolling within the sidebar */
+    border-right: 1px solid #ddd;
+  }
+  
+  .contacts h3 {
+    margin-top: 0;
+    padding-bottom: 10px;
+  }
+  
+  #contacts-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  #contacts-list li {
+    padding: 10px;
+    background-color: #e0e0e0;
+    margin-bottom: 2px; /* Reduced the bottom margin */
+    cursor: pointer;
+  }
+  
+  #add-friend-btn {
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+    cursor: pointer;
+    border: none;
+    background-color: #c0c0c0;
+  }
+  
+  .chat-area {
+    flex-grow: 1; /* Allows the chat area to fill the remaining width */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .chat-title {
+    padding: 15px 20px; /* Adjust padding as needed */
+    background-color: #e0e0e0;
+    text-align: center; /* Centers the title text */
+    font-size: 1.2em;
+    font-weight: bold; /* Optional: makes the title text bold */
+    border-bottom: 1px solid #ddd;
+    margin: 0; /* Removes any default margins that may affect centering */
+  }
+  
+  .chat-messages {
+    padding: 20px;
+    overflow-y: auto;
+    flex-grow: 1; /* Ensures the chat messages use the available space */
+  }
+  
+  .chat-box {
+    padding: 10px 20px; /* Reduced padding for the input box */
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #ddd;
+  }
+  
+  #message-input {
+    flex-grow: 1;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  #send-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
