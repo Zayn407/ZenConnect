@@ -291,7 +291,11 @@
         let progressValue;
         if (userGoal !== 0) progressValue = (currentProgress / userGoal) * 100; // calculate progress percentage
         else progressValue = currentProgress > userGoal ? 100 : 0; // handle division by zero
-        progressValue = Math.min(progressValue, 100);
+        progressValue = Math.round(Math.min(progressValue, 100));
+
+        // update feedback
+        if (progressValue == 100) document.getElementById('progress-notif').textContent = `You reached your goal for this week, congrats!`;
+        else document.getElementById('progress-notif').textContent = `You are ${progressValue}% to reaching your goal for this week!`;
 
         // update progress bar
         const progressBar = document.querySelector('.progress-bar');
