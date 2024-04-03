@@ -41,7 +41,7 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
             margin: 0;
             padding: 0;
             background-color: #CFE2F3;
@@ -247,7 +247,7 @@
 
             <div class="set-goal-menu">
                 <button id="increase">&lt;</button>
-                    <h2 id="progress-display">My goal is 0 minutes per week</h2>
+                    <h2 id="progress-display">My goal is <span style='color: red'>0</span> minutes per week</h2>
                 <button id="decrease">&gt;</button>
 
                 <div class="dropdown">
@@ -281,8 +281,8 @@
             document.getElementById('goal-type').value = goalEntries.get('Goal ' + currentGoalNum).type;
             document.getElementById('goal-time').value = goalEntries.get('Goal ' + currentGoalNum).duration;
         }
-        if (userGoal == 1) document.getElementById('progress-display').textContent = "My goal is " + userGoal + " minute per week";
-        else document.getElementById('progress-display').textContent = "My goal is " + userGoal + " minutes per week";
+        if (userGoal == 1) document.getElementById('progress-display').innerHTML = "My goal is <span style='color: red'>" + userGoal + "</span> minute per week";
+        else document.getElementById('progress-display').innerHTML = "My goal is <span style='color: red'>" + userGoal + "</span> minutes per week";
 
         // update the progress indicator
         document.getElementById('percent-indicator').textContent = `${currentProgress}/${userGoal}`;

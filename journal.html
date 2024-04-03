@@ -42,7 +42,7 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
             margin: 0;
             padding: 0;
             background-color: #CFE2F3;
@@ -430,12 +430,9 @@
             const dateMap = journalEntries.get(selectedCurrentDate);
             if (dateMap.has(currentJournalNum)) {
                 dateMap.delete(currentJournalNum);
-                console.log(`Deleted entry with ID ${currentJournalNum} for date ${selectedCurrentDate}`);
-            } else {
-                console.log(`No entry found with ID ${currentJournalNum} for date ${selectedCurrentDate}`);
-            }
-            // update tooltip message
-            document.getElementById('tooltips').textContent = "Journal entry deleted!";
+                // update tooltip message
+                document.getElementById('tooltips').textContent = "Journal entry deleted!";
+            } else document.getElementById('tooltips').textContent = "No journal entry to delete...";
         } else document.getElementById('tooltips').textContent = "No journal entry to delete...";
     }
 
