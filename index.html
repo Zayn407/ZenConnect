@@ -8,11 +8,10 @@
 
     Features:
     - User greeting with dynamic 'Welcome' header.
-    - User interaction through a drop-down menu linked to 'Username', offering navigation to various sections of the app like Goals, Journal, Chat, Meditation, and Exploration.
+    - User interaction through a drop-down menu linked to 'Username', offering navigation to various sections of the app like Goals, Journal, Chat, Meditation, Exporation and social.
     - A progress bar indicating the user's current meditation progress or other relevant metrics.
     - Inspirational taglines to encourage and motivate users as they begin their meditation journey.
 -->
-  
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,15 +22,9 @@
 <style>
   body {
     font-family: 'Comic Sans MS', sans-serif;
+    background-color: #999999; /* RGB: 153, 153, 153 */
     margin: 0;
     padding: 0;
-    background-image: url('images/welcomeImage.jpg'); /* Adjust path as necessary */
-    background-size: cover; /* Cover the entire page */
-    background-position: center; /* Center the background image */
-    background-repeat: no-repeat; /* Prevent the image from repeating */
-    background-attachment: fixed; /* Keep the image fixed during scroll */
-    height: 100%; /* Ensure the body takes minimum full viewport height */
-    min-height: 100vh; /* Minimum height of 100% of the viewport height */
   }
   .welcome-container {
     background-color: #cfe2f3; /* RGB: 207, 226, 243 */
@@ -48,7 +41,7 @@
     font-weight: bold;
   }
   .user-bar {
-    background-color: rgba(153, 153, 153, 0.7); /* Gray with 70% opacity */
+    background-color: #999999; /* RGB: 153, 153, 153 */
     padding: 10px 20px;
     position: relative;
     z-index: 1000; /* Ensures the user bar stays above other content */
@@ -109,20 +102,21 @@
 </head>
 <body>
 
-<div class="user-bar">
-  <div class="user-info">
-    <span class="avatar"></span>
-    <span class="username">Username »
-      <div class="dropdown-content">
-        <a href="progress.html">Goals</a> <!-- Updated Goals link -->
-        <a href="journal.html">Journal</a> <!-- Updated Journal link -->
-        <a href="social_page.html">Chat</a> <!-- Updated Chat link -->
-        <a href="meetingAndMeditation.html">Meditation</a> <!-- Local file for Meditation -->
-        <a href="exploration.html">Exploration</a> <!-- Updated Exploration link -->
-      </div>
-    </span>
+  <div class="user-bar">
+    <div class="user-info">
+      <span class="avatar"></span>
+      <span class="username">Zayn407 »
+        <div class="dropdown-content">
+          <a href="https://zyx898.github.io/ZenConnect/journal.html">Journal</a>
+          <a href="https://zyx898.github.io/ZenConnect/chat_page.html">Chat</a>
+          <a href="https://zyx898.github.io/ZenConnect/meetingAndMeditation.html">Meditation</a>
+          <a href="https://zyx898.github.io/ZenConnect/exploration.html">Exploration</a>
+          <a href="https://zyx898.github.io/ZenConnect/progress.html">Goals</a>
+          <a href="https://zyx898.github.io/ZenConnect/social_page.html">Social</a>
+        </div>
+      </span>
+    </div>
   </div>
-</div>
 
 <div class="welcome-container">
   <h1 class="welcome-header">WELCOME</h1>
