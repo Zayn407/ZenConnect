@@ -70,6 +70,16 @@
 </div>
 
 <script async src="https://cse.google.com/cse.js?cx=664e348dc06344073"></script>
+<script>
+  window.onload = function() {
+    var checkExist = setInterval(function() {
+       if (document.querySelector('input.gsc-input')) {
+          clearInterval(checkExist);
+          document.querySelector('input.gsc-input').placeholder = 'Search for meditation information';
+       }
+    }, 100);
+  };
+</script>
 
 </body>
 </html>
