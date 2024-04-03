@@ -58,6 +58,10 @@
       color: #6e6e6e;
       pointer-events: none;
     }
+    .gsc-input-box input.gsc-input {
+    text-align: right; 
+    padding-right: 10px;
+  }
   </style>
 </head>
 <body>
@@ -75,7 +79,9 @@
     var checkExist = setInterval(function() {
        if (document.querySelector('input.gsc-input')) {
           clearInterval(checkExist);
-          document.querySelector('input.gsc-input').placeholder = 'Search for meditation information';
+          var inputElement = document.querySelector('input.gsc-input');
+          inputElement.placeholder = 'Search for meditation information';
+          inputElement.style.textAlign = 'right';
        }
     }, 100);
   };
