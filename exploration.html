@@ -1,0 +1,78 @@
+<!-- 
+    File: exploration.html
+    Project: ZenConnect - Group 12
+    Course: UIC - CS422
+    Author: Shenfan Feng
+
+    Purpose: This HTML page serves as a search interface for the ZenConnect meditation app. It provides a user-friendly search bar for users to quickly find meditation-related information directly from the welcome interface.
+
+    Features:
+    - A prominent search bar for meditation information, designed to engage users immediately upon arrival.
+    - The search bar includes a magnifying glass icon for visual emphasis and intuitive interaction.
+    - User interaction through a drop-down menu linked to 'Username', offering navigation to various sections of the app like Goals, Journal, Chat, Meditation, and Exploration.
+    - The layout is optimized for readability and ease of use, ensuring a seamless user experience.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meditation Search</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', sans-serif;
+      background-color: #e4f0f5;
+      margin: 0;
+      padding: 0;
+    }
+    .search-container {
+      background-color: #cfe2f3;
+      text-align: center;
+      padding: 20px;
+    }
+    .search-header {
+      color: #9999ff;
+      font-size: 30pt;
+      font-weight: bold;
+      font-family: 'Amatic SC', cursive; 
+    }
+    .search-box {
+      max-width: 800px;
+      margin: 20px auto;
+      position: relative;
+    }
+    .search-form {
+      position: relative;
+    }
+    .search-input {
+      width: 100%; /* Full width */
+      padding: 10px 10px 10px 35px; 
+      font-size: 16pt; 
+      border: none;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    .search-icon {
+      position: absolute;
+      left: 10px; 
+      top: 50%;
+      transform: translateY(-50%);
+      color: #6e6e6e;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="search-container">
+  <h1 class="search-header">MEDITATION SEARCH</h1>
+  <div class="search-box">
+    <form class="search-form" action="https://www.google.com/search" method="GET" target="_blank">
+      <span class="search-icon">&#128269;</span> <!-- Unicode magnifying glass -->
+      <input type="text" class="search-input" name="q" placeholder="Search for meditation information" required>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>
