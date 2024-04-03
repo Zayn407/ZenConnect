@@ -42,52 +42,34 @@
       margin: 20px auto;
       position: relative;
     }
-    .search-form {
-      position: relative;
-    }
     .search-input {
       width: 100%;
-      padding: 10px 10px 10px 35px; 
-      font-size: 16pt; 
+      padding: 10px 10px 10px 35px;
+      font-size: 16pt;
       border: none;
       border-radius: 5px;
       box-sizing: border-box;
     }
     .search-icon {
       position: absolute;
-      left: 10px; 
+      left: 10px;
       top: 50%;
       transform: translateY(-50%);
       color: #6e6e6e;
       pointer-events: none;
     }
-    iframe {
-      width: 100%;
-      height: 600px;
-      border: none;
-    }
   </style>
-  <script>
-    function performSearch(event) {
-      event.preventDefault();
-      var query = document.getElementById('search-input').value;
-      var iframe = document.getElementById('search-results');
-      iframe.src = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
-    }
-  </script>
 </head>
 <body>
 
 <div class="search-container">
   <h1 class="search-header">MEDITATION SEARCH</h1>
   <div class="search-box">
-    <form class="search-form" onsubmit="performSearch(event)">
-      <span class="search-icon">&#128269;</span>
-      <input type="text" id="search-input" class="search-input" placeholder="Search for meditation information" required>
-    </form>
+    <div class="gcse-search"></div> <!-- Google Custom Search Container -->
   </div>
 </div>
-<iframe id="search-results"></iframe>
+
+<script async src="https://cse.google.com/cse.js?cx=664e348dc06344073"></script>
 
 </body>
 </html>
