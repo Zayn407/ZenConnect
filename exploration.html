@@ -46,7 +46,7 @@
       position: relative;
     }
     .search-input {
-      width: 100%; /* Full width */
+      width: 100%;
       padding: 10px 10px 10px 35px; 
       font-size: 16pt; 
       border: none;
@@ -61,19 +61,33 @@
       color: #6e6e6e;
       pointer-events: none;
     }
+    iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+    }
   </style>
+  <script>
+    function performSearch(event) {
+      event.preventDefault();
+      var query = document.getElementById('search-input').value;
+      var iframe = document.getElementById('search-results');
+      iframe.src = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+    }
+  </script>
 </head>
 <body>
 
 <div class="search-container">
   <h1 class="search-header">MEDITATION SEARCH</h1>
   <div class="search-box">
-    <form class="search-form" action="https://www.google.com/search" method="GET" target="_blank">
-      <span class="search-icon">&#128269;</span> <!-- Unicode magnifying glass -->
-      <input type="text" class="search-input" name="q" placeholder="Search for meditation information" required>
+    <form class="search-form" onsubmit="performSearch(event)">
+      <span class="search-icon">&#128269;</span>
+      <input type="text" id="search-input" class="search-input" placeholder="Search for meditation information" required>
     </form>
   </div>
 </div>
+<iframe id="search-results"></iframe>
 
 </body>
 </html>
