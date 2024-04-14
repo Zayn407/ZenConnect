@@ -168,6 +168,34 @@
             text-align: left;
         }
 
+        .slider-container {
+            position: relative;
+            width: 200px;
+            margin: 0 auto;
+        }
+
+        .low-label, .high-label {
+            position: absolute;
+            bottom: 5px; 
+            font-size: 12px;
+        }
+
+        .low-label {
+            left: 0;
+        }
+
+        .high-label {
+            right: 0;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        input[type="password"],
+        input[type="range"] {
+        text-align: center; /* Center the text */
+        }
+
     </style>
 
 <body>
@@ -211,31 +239,81 @@
 
             <div>
                 <label for="start-time">Meditation Start Time:</label>
-                <input type="text" id="start-time">
+                <input type="text" id="start-time" value="00:00">
             </div>
             <div>
                 <label for="end-time">Meditation End Time:</label>
-                <input type="text" id="end-time">
+                <input type="text" id="end-time" value="00:00">
             </div>
             <div>
                 <label for="location">Location:</label>
-                <input type="text" id="location">
+                <input type="text" id="location" value="[enter location here]">
             </div>
             <div>
                 <label for="type">Type:</label>
-                <input type="text" id="type">
-            </div>
+                <select id="type">
+                    <option value="mindfulness">Mindfulness Meditation</option>
+                    <option value="transcendental">Transcendental Meditation</option>
+                    <option value="loving-kindness">Loving-kindness Meditation</option>
+                    <option value="vipassana">Vipassana Meditation</option>
+                    <option value="zen">Zen Meditation</option>
+                    <option value="guided">Guided Meditation</option>
+                    <option value="body-scan">Body Scan Meditation</option>
+                    <option value="breath-awareness">Breath Awareness Meditation</option>
+                    <option value="mantra">Mantra Meditation</option>
+                    <option value="chakra">Chakra Meditation</option>
+                    <option value="yoga">Yoga Meditation</option>
+                    <option value="walking">Walking Meditation</option>
+                    <option value="visualization">Visualization Meditation</option>
+                    <option value="metta">Metta Meditation</option>
+                    <option value="silence">Silent Meditation</option>
+                    <option value="sound">Sound Meditation</option>
+                    <option value="progressive-relaxation">Progressive Relaxation Meditation</option>
+                    <option value="art">Art Meditation</option>
+                    <option value="compassion">Compassion Meditation</option>
+                    <option value="reflection">Reflection Meditation</option>
+                    <option value="gratitude">Gratitude Meditation</option>
+                    <option value="emptiness">Emptiness Meditation</option>
+                    <option value="body-mind">Body-Mind Meditation</option>
+                    <option value="open-awareness">Open Awareness Meditation</option>
+                    <option value="teaching">Teaching Meditation</option>
+                    <option value="heartfulness">Heartfulness Meditation</option>
+                </select>
+              </div>
             <div>
                 <label for="mantra">Mantra:</label>
-                <input type="text" id="mantra">
+                <input type="text" id="mantra" value="[enter mantra here]">
             </div>
             <div>
-                <label for="exercises">Exercises:</label>
-                <input type="text" id="exercises">
+                <label for="exercisesForm">Exercises:</label>
+                <label for="exercisesForm">(select all that apply by holding command and click)</label>
+                <form id="exercisesForm">
+                    <select id="exerciseSelect" name="exercises" multiple>
+                        <option value="Breathing Exercises">Breathing Exercises</option>
+                        <option value="Body Scan">Body Scan</option>
+                        <option value="Guided Imagery">Guided Imagery</option>
+                        <option value="Progressive Muscle Relaxation">Progressive Muscle Relaxation</option>
+                        <option value="Visualization">Visualization</option>
+                        <option value="Mantra Repetition">Mantra Repetition</option>
+                        <option value="Mindful Eating">Mindful Eating</option>
+                        <option value="Walking Meditation">Walking Meditation</option>
+                        <option value="Gratitude Practice">Gratitude Practice</option>
+                        <option value="Loving-kindness Meditation">Loving-kindness Meditation</option>
+                        <option value="Sound Meditation">Sound Meditation</option>
+                        <option value="Journaling">Journaling</option>
+                        <option value="Body Awareness">Body Awareness</option>
+                        <option value="Grounding Exercises">Grounding Exercises</option>
+                        <option value="Observing Thoughts">Observing Thoughts</option>
+                    </select>
+                </form>
             </div>
             <div>
                 <label for="mood-wheel">Mood Level:</label>
-                <input type="range" id="mood-wheel" min="0" max="100">
+                <div class="slider-container">
+                    <input type="range" id="mood-wheel" min="0" max="100">
+                    <span class="low-label">Low</span>
+                    <span class="high-label">High</span>
+                </div>
             </div>
             <div>
                 <label for="focus">Focus:</label>
@@ -266,6 +344,7 @@
 
 <script>
     // global variables
+    let existingMap = localStorage.getItem('journalData');
     const journalEntries = new Map();  
     var currentJournalNum = 1;
     var selectedCurrentDate = '';
@@ -354,7 +433,7 @@
         const location = document.getElementById("location").value;
         const type = document.getElementById("type").value;
         const mantra = document.getElementById("mantra").value;
-        const exercises = document.getElementById("exercises").value;
+        const exercises = "test"; //document.getElementById("exercises").value;
         const moodLevel = document.getElementById("mood-wheel").value;
         const focus = document.getElementById("focus").value;
         const thoughts = document.getElementById("thoughts").value;
@@ -390,6 +469,9 @@
         // update tooltip message
         document.getElementById('tooltips').textContent = "Journal entry saved!";
 
+        // update local storage 
+        localStorage.setItem('journalData', JSON.stringify(Array.from(journalEntries.entries())));
+
         //console.log("Journal Entries:", journalEntries);
 
     }
@@ -405,7 +487,7 @@
         document.getElementById("location").value = "";
         document.getElementById("type").value = "";
         document.getElementById("mantra").value = "";
-        document.getElementById("exercises").value = "";
+        //document.getElementById("exercises").value = "";
         document.getElementById("mood-wheel").value = "";
         document.getElementById("focus").value = "";
         document.getElementById("thoughts").value = "";
@@ -448,7 +530,7 @@
                 document.getElementById("location").value = entry.location;
                 document.getElementById("type").value = entry.type;
                 document.getElementById("mantra").value = entry.mantra;
-                document.getElementById("exercises").value = entry.exercises;
+                //document.getElementById("exercises").value = entry.exercises;
                 document.getElementById("mood-wheel").value = entry.moodLevel;
                 document.getElementById("focus").value = entry.focus;
                 document.getElementById("thoughts").value = entry.thoughts;
@@ -512,6 +594,8 @@
         document.getElementById("nextJournal").addEventListener("click", nextJournal);
 
     });
+
+
 
 </script>
 
