@@ -224,12 +224,39 @@
 
                     <div>
                         <label for="goal-type">Meditation Type:</label>
-                        <input type="text" id="goal-type">
+                        <select id="goal-type" id="goal-type">
+                            <option value="mindfulness">Mindfulness Meditation</option>
+                            <option value="transcendental">Transcendental Meditation</option>
+                            <option value="loving-kindness">Loving-kindness Meditation</option>
+                            <option value="vipassana">Vipassana Meditation</option>
+                            <option value="zen">Zen Meditation</option>
+                            <option value="guided">Guided Meditation</option>
+                            <option value="body-scan">Body Scan Meditation</option>
+                            <option value="breath-awareness">Breath Awareness Meditation</option>
+                            <option value="mantra">Mantra Meditation</option>
+                            <option value="chakra">Chakra Meditation</option>
+                            <option value="yoga">Yoga Meditation</option>
+                            <option value="walking">Walking Meditation</option>
+                            <option value="visualization">Visualization Meditation</option>
+                            <option value="metta">Metta Meditation</option>
+                            <option value="silence">Silent Meditation</option>
+                            <option value="sound">Sound Meditation</option>
+                            <option value="progressive-relaxation">Progressive Relaxation Meditation</option>
+                            <option value="art">Art Meditation</option>
+                            <option value="compassion">Compassion Meditation</option>
+                            <option value="reflection">Reflection Meditation</option>
+                            <option value="gratitude">Gratitude Meditation</option>
+                            <option value="emptiness">Emptiness Meditation</option>
+                            <option value="body-mind">Body-Mind Meditation</option>
+                            <option value="open-awareness">Open Awareness Meditation</option>
+                            <option value="teaching">Teaching Meditation</option>
+                            <option value="heartfulness">Heartfulness Meditation</option>
+                        </select>
                     </div>
 
                     <div>
                         <label for="goal-time">Duration (in mins)</label>
-                        <input type="number" min="0" id="goal-time">
+                        <input type="number" min="0" id="goal-time" value="0">
                     </div>
 
                     <br></br>
@@ -251,7 +278,7 @@
                 <button id="decrease">&gt;</button>
 
                 <div class="dropdown">
-                    <button class="dropbtn">Intervals</button>
+                    <button class="dropbtn">Change Goal Selection Interval</button>
                     <div class="dropdown-content">
                         <button class="dropdown-option" id="option1" data-value="1">1 minute</button>
                         <button class="dropdown-option" id="option2" data-value="5">5 minutes</button>
@@ -267,6 +294,7 @@
 
 <script>
     // global variables
+    let existingMap = localStorage.getItem('goalData');
     const goalEntries = new Map(); 
     var currentProgress = 0; 
     var userGoal = 0;
@@ -395,6 +423,9 @@
 
                 // update tooltip message
                 document.getElementById('tooltips').textContent = "New goal saved!";
+
+                // update local storage 
+                localStorage.setItem('goalData', JSON.stringify(Array.from(goalEntries.entries())));
 
             } else {
                 // display error message for missing fields
