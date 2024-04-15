@@ -1,25 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Social Page</title>
-<link rel="stylesheet" href="social_styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Page</title>
+  <link rel="stylesheet" href="social_styles.css">
 </head>
+
 <body>
-
-<header class="header">
-  <div class="status-section">
-    <textarea id="status-input" placeholder="What's on your mind?"></textarea>
-    <button id="post-status">Post</button>
+  <div class="user-bar">
+    <div class="user-info">
+      <span class="avatar"></span>
+      <span class="username">Zayn407 »
+        <div class="dropdown-content">
+          <a href="exploration.html">Exploration</a>
+          <a href="progress.html">Goals</a>
+          <a href="journal.html">Journal</a>
+          <a href="chat_page.html">Chat</a>
+          <a href="social_page.html">Social</a>
+          <a href="videoMeetPage.html">Video Meet Page</a>
+          <a href="meditation.html">Meditation</a>
+        </div>
+      </span>
+    </div>
   </div>
-  <div class="search-section">
-    <input type="text" id="search-input" placeholder="Search...">
-    <button id="search-btn">Search</button>
-  </div>
-</header>
+  <header class="header">
+    <div class="status-section">
+      <textarea id="status-input" placeholder="What's on your mind?"></textarea>
+      <button id="post-status">Post</button>
+    </div>
+    <div class="search-section">
+      <input type="text" id="search-input" placeholder="Search...">
+      <button id="search-btn">Search</button>
+    </div>
+  </header>
 
-<main class="main-content">
+  <main class="main-content">
+
     <section class="social-feed">
       <h2>Social Feed</h2>
       <!-- Dummy posts for the social feed -->
@@ -50,6 +68,7 @@
       </div>
     </aside>
   </main>
-<script src="social_scripts.js"></script>
+  <script src="social_scripts.js"></script>
 </body>
+
 </html>
