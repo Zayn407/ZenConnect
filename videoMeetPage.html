@@ -1,15 +1,3 @@
-<!-- 
-    File: welcome.html
-    Project: ZenConnect - Group 12
-    Course: UIC - CS422
-    Author: Utsav Joshi
-
-    Purpose: It is like a zoom page where you can chat with others users and the instructor. 
-
-    Features: You can watch the instructor, mute and unmute, enable video or disable video. 
-
--->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,7 +10,9 @@
             font-family: 'Calibri', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #CFE2F3;
+            background-image: url('images/realImage.jpg'); 
+            background-size: cover; /* Cover the entire page */
+            background-position: center; /* Center the background image */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -62,7 +52,7 @@
             flex-direction: column;
         }
 
-        .mute-button {
+        .button {
             background: #FFF;
             border: none;
             padding: 10px;
@@ -128,8 +118,9 @@
             <!-- Mute icon -->
             <img src="mute-icon-path.png" alt="Mute" class="mute-icon" onclick="toggleMute()">
         </div>
-        <!-- Toggle camera button -->
-        <button class="mute-button" id="cameraButton">Toggle Camera</button>
+        <!-- Mute and Toggle camera buttons -->
+        <button class="button" id="muteButton">Mute/Unmute</button>
+        <button class="button" id="cameraButton">Toggle Camera</button>
     </div>
     
     <!-- Chat section remains the same -->
@@ -153,6 +144,7 @@
         let audioTrack = userVideoStream.getAudioTracks()[0];
         if (audioTrack) {
             audioTrack.enabled = !audioTrack.enabled;
+            document.getElementById('muteButton').textContent = audioTrack.enabled ? 'Mute' : 'Unmute';
         }
     }
 
