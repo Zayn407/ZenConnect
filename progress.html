@@ -193,10 +193,65 @@
             text-align: center;
         }
 
+        .user-bar {
+            background-color: #999999; /* RGB: 153, 153, 153 */
+            padding: 10px 20px;
+            position: relative;
+            z-index: 1000; /* Ensures the user bar stays above other content */
+        }
+        .avatar {
+            background-color: #ffffff; /* White */
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .username {
+            color: #ffffff;
+            margin-left: 10px;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            left: 20px;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        .user-info:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
 
     </style>
 
 <body>
+
+    <div class="user-bar">
+        <div class="user-info">
+            <span class="avatar"></span>
+            <span class="username">Zayn407 »
+            <div class="dropdown-content">
+                <a href="journal.html">Journal</a>
+                <a href="chat_page.html">Chat</a>
+                <a href="meetingAndMeditation.html">Meditation</a>
+                <a href="exploration.html">Exploration</a>
+                <a href="progress.html">Goals</a>
+                <a href="social_page.html">Social</a>
+            </div>
+            </span>
+        </div>
+    </div>
 
         <div class="progress-container">
             <h2 id="progress"><u>Progress</u></h2>
