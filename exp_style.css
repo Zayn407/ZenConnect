@@ -74,13 +74,4 @@ body {
     vertical-align: middle;
     cursor: pointer;
   }
-  .autocomplete-suggestion {
-    color: #999; /* 灰色文字 */
-    margin-left: -5px;
-  }
-  
-  .search-input {
-    width: calc(100% - 20px); /* 留出提示文字空间 */
-  }
-  
   
