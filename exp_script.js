@@ -1,29 +1,23 @@
-// 定义一个回调函数，用于在搜索框中添加 "meditation" 关键字
-function addMeditationTerm(query) {
-  // 检查输入中是否已包含 "meditation"（不区分大小写）
-  if (!query.toLowerCase().includes("meditation")) {
-    return query + " meditation";
-  }
-  return query;
-}
+window.onload = function() {
+  var checkExist = setInterval(function() {
+    var inputElement = document.querySelector('input.gsc-input');
+    if (inputElement) {
+      clearInterval(checkExist);
+      inputElement.placeholder = 'Search for meditation information';
 
-// 等待 Google CSE 脚本加载完毕
-window.__gcse = {
-  parsetags: 'explicit',
-  callback: function() {
-    var searchBoxElement = document.querySelector('input.gsc-input');
-    var typeSelect = document.getElementById('meditation-type');
-    
-    // 当用户在下拉菜单中选择一个选项时，修改搜索框的内容
-    typeSelect.addEventListener('change', function() {
-      var typeValue = typeSelect.value;
-      var typeText = typeSelect.options[typeSelect.selectedIndex].text;
-      searchBoxElement.value = addMeditationTerm(typeText);
-    });
-
-    if (searchBoxElement) {
-      // 当用户触发搜索时（例如，按下 Enter 键），修改查询
-      searchBoxElement.addEventListener('keydown', function(e) {
-        if (e.keyCode === 13) { // Enter 键被按下
-          var modifiedQuery = addMeditationTerm(searchBoxElement.value);
-          searchBoxElem
+      // 添加事件监听器来处理输入值的改变
+      inputElement.addEventListener('input', function() {
+        var currentValue = inputElement.value.toLowerCase();  // 转换为小写进行检查
+        var meditationSuffix = " meditation";
+        // 检查当前输入是否已经包含 "meditation"（不区分大小写）
+        if (!currentValue.includes("meditation")) {
+          // 如果当前有输入，且没有包含 "meditation"，则添加
+          if (currentValue.trim()) {
+            // 使用.trim()处理输入前后的空格，并添加 " meditation"
+            inputElement.value = currentValue.trim() + meditationSuffix;
+          }
+        }
+      });
+    }
+  }, 100);
+};

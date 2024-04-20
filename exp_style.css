@@ -82,15 +82,5 @@ body {
   .search-input {
     width: calc(100% - 20px); /* 留出提示文字空间 */
   }
-
-  .type-select-container {
-    margin-top: 20px;
-    text-align: center;
-  }
-  
-  .type-select-container label {
-    margin-right: 10px;
-  }
-  
   
   
