@@ -7,19 +7,15 @@ window.onload = function() {
   
         // 添加事件监听器来处理输入值的改变
         inputElement.addEventListener('input', function() {
-          var currentValue = inputElement.value.trim();  // 取得当前输入，去除首尾空格
-          var lowerCaseValue = currentValue.toLowerCase(); // 将输入值转换为小写，用于检查
+          var currentValue = inputElement.value.toLowerCase();  // 转换为小写进行检查
           var meditationSuffix = " meditation";
-          
           // 检查当前输入是否已经包含 "meditation"（不区分大小写）
-          if (!lowerCaseValue.includes("meditation")) {
-            // 在用户停止输入1秒后添加 "meditation"，如果仍然需要
-            clearTimeout(inputElement.dataset.timeout);
-            inputElement.dataset.timeout = setTimeout(function() {
-              if (!inputElement.value.toLowerCase().includes("meditation")) {
-                inputElement.value = currentValue + meditationSuffix;
-              }
-            }, 1000);
+          if (!currentValue.includes("meditation")) {
+            // 如果当前有输入，且没有包含 "meditation"，则添加
+            if (currentValue.trim()) {
+              // 使用.trim()处理输入前后的空格，并添加 " meditation"
+              inputElement.value = currentValue.trim() + meditationSuffix;
+            }
           }
         });
       }
