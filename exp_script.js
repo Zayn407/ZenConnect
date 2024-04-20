@@ -12,6 +12,15 @@ window.__gcse = {
   parsetags: 'explicit',
   callback: function() {
     var searchBoxElement = document.querySelector('input.gsc-input');
+    var typeSelect = document.getElementById('meditation-type');
+    
+    // 当用户在下拉菜单中选择一个选项时，修改搜索框的内容
+    typeSelect.addEventListener('change', function() {
+      var typeValue = typeSelect.value;
+      var typeText = typeSelect.options[typeSelect.selectedIndex].text;
+      searchBoxElement.value = addMeditationTerm(typeText);
+    });
+
     if (searchBoxElement) {
       // 当用户触发搜索时（例如，按下 Enter 键），修改查询
       searchBoxElement.addEventListener('keydown', function(e) {
@@ -26,3 +35,13 @@ window.__gcse = {
 
 // 加载 Google CSE 脚本
 (function() {
+  var cx = '664e348dc06344073'; // 你的 Google CSE ID
+  var gcse = document.createElement('script');
+  gcse.type = 'text/javascript';
+  gcse.async = true;
+  gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+  var s = document.getElementsByTagName('script')[0];
+  s.parentNode.insertBefore(gcse, s);
+})();
+
+// 这里不需要 DOMContentLoaded 因为 __gcse.callback 会在 CSE 加载完成后调用
