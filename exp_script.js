@@ -26,22 +26,4 @@ window.__gcse = {
       searchBoxElement.addEventListener('keydown', function(e) {
         if (e.keyCode === 13) { // Enter 键被按下
           var modifiedQuery = addMeditationTerm(searchBoxElement.value);
-          searchBoxElement.value = modifiedQuery;
-        }
-      });
-    }
-  }
-};
-
-// 加载 Google CSE 脚本
-(function() {
-  var cx = '664e348dc06344073'; // 你的 Google CSE ID
-  var gcse = document.createElement('script');
-  gcse.type = 'text/javascript';
-  gcse.async = true;
-  gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
-  var s = document.getElementsByTagName('script')[0];
-  s.parentNode.insertBefore(gcse, s);
-})();
-
-// 这里不需要 DOMContentLoaded 因为 __gcse.callback 会在 CSE 加载完成后调用
+          searchBoxElem
