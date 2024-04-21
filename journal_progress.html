@@ -571,8 +571,8 @@
     var journalData = {};
 
     // update the progress bar
+    // update the progress bar and save progress to localStorage
     function updateGoalDisplay() {
-
         if (userGoalMins == 0) var progressMade = 0;
         else var progressMade = (userCompletedMins / userGoalMins) * 100;
 
@@ -584,7 +584,11 @@
         if (progressMade <= 0) document.getElementById('progress_notif').textContent = `Current goal for this week: ${userGoalMins} minutes`;
         else document.getElementById('progress_notif').textContent = `${progressMade}% progress has been made this week`;
 
+        // Save progress to localStorage
+        localStorage.setItem('userGoalMins', userGoalMins);
+        localStorage.setItem('userCompletedMins', userCompletedMins);
     }
+
 
     // on page load, generate the calender and attach event listeners
     document.addEventListener("DOMContentLoaded", function() {

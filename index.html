@@ -12,7 +12,6 @@
     - A progress bar indicating the user's current meditation progress or other relevant metrics.
     - Inspirational taglines to encourage and motivate users as they begin their meditation journey.
 -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -94,7 +93,7 @@
   .progress-bar {
     background-color: #4CAF50;
     height: 100%;
-    width: 50%; /* Initial width will be set by JavaScript */
+    width: 0%; /* Initial width will be set by JavaScript */
   }
   .tagline-container {
     background-color: #d9ead3;
@@ -139,11 +138,17 @@
 </div>
 
 <script>
-// JavaScript to update the progress bar from local storage
 document.addEventListener('DOMContentLoaded', function() {
-  var progress = localStorage.getItem('userProgress') || 50; // Get progress from local storage or default to 0
-  var progressBar = document.querySelector('.progress-bar');
-  progressBar.style.width = progress + '%'; // Set the width of the progress bar
+  // Check if there is saved progress in localStorage
+  var userGoalMins = localStorage.getItem('userGoalMins');
+  var userCompletedMins = localStorage.getItem('userCompletedMins');
+
+  if (userGoalMins && userCompletedMins) {
+    var progressMade = (userCompletedMins / userGoalMins) * 100;
+
+    const progressBar = document.querySelector('.progress-bar');
+    progressBar.style.width = progressMade + '%';
+  }
 });
 </script>
 
