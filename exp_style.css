@@ -74,4 +74,23 @@ body {
     vertical-align: middle;
     cursor: pointer;
   }
+  .autocomplete-suggestion {
+    color: #999; /* 灰色文字 */
+    margin-left: -5px;
+  }
+  
+  .search-input {
+    width: calc(100% - 20px); /* 留出提示文字空间 */
+  }
+  .meditation-type-dropdown {
+    width: 100%;  /* Makes the dropdown full width of the container */
+    padding: 8px 12px;  /* Padding for aesthetics */
+    margin-top: 10px;  /* Adds some space between the search box and the dropdown */
+    font-family: 'Amatic SC', sans-serif;  /* Keeps font consistent with the rest of the form */
+    font-size: 16px;  /* Legible font size */
+    border: 1px solid #ccc;  /* Subtle border */
+    border-radius: 4px;  /* Rounded corners for modern look */
+  }
+  
+  
   
