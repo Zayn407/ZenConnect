@@ -141,7 +141,7 @@
 <script>
 // JavaScript to update the progress bar from local storage
 document.addEventListener('DOMContentLoaded', function() {
-  var progress = localStorage.getItem('userProgress') || 0; // Get progress from local storage or default to 0
+  var progress = localStorage.getItem('userProgress') || 50; // Get progress from local storage or default to 0
   var progressBar = document.querySelector('.progress-bar');
   progressBar.style.width = progress + '%'; // Set the width of the progress bar
 });
