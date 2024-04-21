@@ -34,8 +34,8 @@
     min-height: 100vh;
   }
   .welcome-container {
-    background-color: #cfe2f3; /* RGB: 207, 226, 243 */
-    color: #0000ff; /* RGB: 0, 0, 255 */
+    background-color: #cfe2f3;
+    color: #0000ff;
     font-family: 'Amatic SC', cursive;
     padding: 20px;
     text-align: center;
@@ -43,18 +43,18 @@
     z-index: 1;
   }
   .welcome-header {
-    color: #9999ff; /* RGB: 153, 0, 255 */
+    color: #9999ff;
     font-size: 45pt;
     font-weight: bold;
   }
   .user-bar {
-    background-color: #999999; /* RGB: 153, 153, 153 */
+    background-color: #999999;
     padding: 10px 20px;
     position: relative;
-    z-index: 1000; /* Ensures the user bar stays above other content */
+    z-index: 1000;
   }
   .avatar {
-    background-color: #ffffff; /* White */
+    background-color: #ffffff;
     border-radius: 50%;
     width: 30px;
     height: 30px;
@@ -94,10 +94,10 @@
   .progress-bar {
     background-color: #4CAF50;
     height: 100%;
-    width: 66%;
+    width: 0%; /* Initial width will be set by JavaScript */
   }
   .tagline-container {
-    background-color: #d9ead3; /* RGB: 217, 234, 211 */
+    background-color: #d9ead3;
     padding: 10px;
     margin-top: 20px;
   }
@@ -109,22 +109,22 @@
 </head>
 <body>
 
-  <div class="user-bar">
-    <div class="user-info">
-      <span class="avatar"></span>
-      <span class="username">Zayn407 »
-        <div class="dropdown-content">
-          <a href="exploration.html">Exploration</a>
-          <a href="journal_progress.html">Progress</a>
-          <a href="journal.html">Journal</a>
-          <a href="chat_page.html">Chat</a>
-          <a href="social_page.html">Social</a>
-          <a href="videoMeetPage.html">Video Meet Page</a>
-          <a href="meditation.html">Meditation</a>
-        </div>
-      </span>
-    </div>
+<div class="user-bar">
+  <div class="user-info">
+    <span class="avatar"></span>
+    <span class="username">Zayn407 »
+      <div class="dropdown-content">
+        <a href="exploration.html">Exploration</a>
+        <a href="journal_progress.html">Progress</a>
+        <a href="journal.html">Journal</a>
+        <a href="chat_page.html">Chat</a>
+        <a href="social_page.html">Social</a>
+        <a href="videoMeetPage.html">Video Meet Page</a>
+        <a href="meditation.html">Meditation</a>
+      </div>
+    </span>
   </div>
+</div>
 
 <div class="welcome-container">
   <h1 class="welcome-header">WELCOME</h1>
@@ -137,6 +137,15 @@
     <p class="welcome-tagline">"FOCUS ON THE PRESENT, FEEL THE INNER SELF, BEGIN YOUR JOURNEY."</p>
   </div>
 </div>
+
+<script>
+// JavaScript to update the progress bar from local storage
+document.addEventListener('DOMContentLoaded', function() {
+  var progress = localStorage.getItem('userProgress') || 0; // Get progress from local storage or default to 0
+  var progressBar = document.querySelector('.progress-bar');
+  progressBar.style.width = progress + '%'; // Set the width of the progress bar
+});
+</script>
 
 </body>
 </html>
