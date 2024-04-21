@@ -3,7 +3,7 @@ window.onload = function() {
     var inputElement = document.querySelector('input.gsc-input');
     if (inputElement) {
       clearInterval(checkExist);
-      inputElement.placeholder = 'Search for meditation information';
+      inputElement.placeholder = '                                         Search for meditation information';
 
       // 添加事件监听器来处理输入值的改变
       inputElement.addEventListener('input', function() {
