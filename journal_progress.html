@@ -1,0 +1,722 @@
+<!-- 
+    File: journal_progress.html
+    Project: ZenConnect - Group 12
+    Course: UIC - CS422
+    Author: Oli Kosiacki
+
+    Purpose: This HTML page serves as a journal and goal application interface. It allows users to record and manage their daily journal entries about their meditation sessions as well as check their current progress and create new goals for themselves.
+
+    Features: 
+    - 
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ZenConnect</title>
+    </head>
+
+    <style>
+
+        .root_container {
+            display: flex;
+            min-height: 100vh;
+            min-width: 100vw;
+        }
+
+        .main_container {
+            display: block;
+            min-height: 50%;
+            max-width: 80%;
+            min-width: 50%;
+            width: 80%;
+        }
+
+        .progress_container {
+            height: 30%;
+            width: auto;
+        }
+
+        .progress_box {
+            display: flex;
+            height: 20%;
+            width: 100%;
+            background-color: rgb(217, 234, 211);
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 5px;
+        }
+
+        .progress_bar {
+            height: 100%;
+            background-color: rgb(182, 215, 168);
+            border-radius: 10px;
+            width: 0; 
+            transition: width 0.5s ease-in-out; /* animation */
+            padding-left: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .set_goal_container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .set_goal_container button,
+        .set_goal_container #goal_input {
+            height: 30px;
+            width: 120px;
+        }
+
+        .goals_container {
+            height: 60vh;
+            width: auto; 
+            visibility: collapse;
+        }
+
+        /* split */
+
+        .journal_main_container {
+            display: flex;
+            position: absolute;
+            right: 0;
+            min-height: 100%;
+            min-width: auto;
+        }
+
+        .journal_container {
+            display: flex;
+            flex-direction: column;
+            border: 2px solid black; 
+            max-height: 80vh;
+            min-height: 80vh;
+            min-width: 30vw;
+            margin-right: -2px;
+            visibility: collapse; /* collapse | visible */
+            position: absolute;
+            right: 10.4vw;
+        }
+
+        .top_container {
+            display: flex;
+            height: auto;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .close_journal_button {
+            height: 50px;
+            width: 50px;
+        }
+
+        .mid_container {
+            display: block;
+            height: 20%;
+            width: 100%;
+            justify-content: center; 
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .horizontal_container h3 {
+            text-align: center;
+        }
+
+        #edit_icon {
+            fill: #666; 
+            width: 16px; 
+            height: 16px;
+            margin-left: 5px; 
+        }
+
+        .mid_container .horizontal_container {
+            display: flex;
+            justify-content: center; 
+            align-items: center;
+            position: relative;
+            text-align: center;
+            padding-bottom: 5%;
+            z-index: 3;
+        }
+
+        .bottom_container {
+            display: block;
+            height: auto;
+            width: auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .journals_container {
+            display: block;
+            border: 2px solid black; 
+            position: absolute;
+            right: 0;
+            max-height: 100%;
+            min-width: 10vw;
+            max-width: 10vw;
+        }
+
+        .journals_container .vertical_container {
+            min-height: 80vh;
+            min-width: 100%;
+            max-height: 80vh;
+            justify-content:flex-start; 
+            align-items: center;
+            padding: 5% 5px;
+            overflow-y: auto;
+        }
+
+        .search_bar_container {
+            display: flex;
+            justify-content: center; 
+            align-items: center;
+            height: 20%;
+            min-width: 100%;
+            padding: 5% 0;
+        }
+        
+        .search_button .icon {
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        input[type="text"] {
+            text-align: center;
+        }
+
+        #search_input {
+            min-height: 25px;
+            /*min-width: 100px;*/
+            max-width: 70%;
+        }
+
+        input[type="text"]::placeholder {
+            text-align: center;
+            color: #888;
+        }
+        
+        input[type="text"]:placeholder-shown {
+            text-align: center;
+            color: #888;
+        }
+
+        .journal_entry_box {
+            min-height: 50px;
+            height: 50px;
+            width: 80%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 2px solid black; 
+        }
+
+        .journal_entry_box button{
+            height: 100%;
+            width: 100%;
+            font-size: small;
+        }
+
+        .vertical_container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center;
+            text-align: center;
+        }
+
+        .horizontal_container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center; 
+            align-items: center;
+        }
+        
+        .button_container {
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+            min-height: 20%; 
+            min-width: 100%; 
+            padding: 5% 0;
+        }
+
+        #new_journal_button {
+            min-height: 5vh; 
+            min-width: 90%; 
+        }
+
+        /* checkmark box 
+
+        input[type="checkbox"] {
+            display: none;
+        }
+        
+        .checkmark {
+            width: 20px;
+            height: 20px;
+            background-color: #ccc;
+            border-radius: 3px;
+            display: inline-block;
+            cursor: pointer;
+        }
+        
+        .checkmark:after {
+            content: "";
+            width: 10px;
+            height: 5px;
+            border: solid #fff;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            display: none;
+        }
+        
+        input[type="checkbox"]:checked + .checkmark:after {
+            display: block;
+        }*/
+
+        /* nav bar */
+
+        .user-bar {
+            background-color: #999999; /* RGB: 153, 153, 153 */
+            padding: 10px 20px;
+            position: relative;
+            z-index: 1000; /* Ensures the user bar stays above other content */
+        }
+        .avatar {
+            background-color: #ffffff; /* White */
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .username {
+            color: #ffffff;
+            margin-left: 10px;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            left: 20px;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        .user-info:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+
+
+    </style>
+
+<body>
+
+    <div class="user-bar">
+        <div class="user-info">
+            <span class="avatar"></span>
+            <span class="username">Zayn407 »
+            <div class="dropdown-content">
+                <a href="journal_progress.html">Progress</a>
+                <a href="chat_page.html">Chat</a>
+                <a href="meetingAndMeditation.html">Meditation</a>
+                <a href="exploration.html">Exploration</a>
+                <a href="social_page.html">Social</a>
+            </div>
+            </span>
+        </div>
+    </div>
+
+    <div class="root_container">
+        
+        <div class="main_container">
+            
+            <!-- <h1 id="ZenConnect_title">ZenConnect</h1> -->
+
+            <div class="progress_container">
+                <h2 id="progress"><u>Progress</u></h2>
+                <div class="horizontal_container"> 
+                    <div class="progress_box">
+                        <div class="progress_bar" data_progress="0%">
+                            <h3 id="percent_indicator">0/0</h3>
+                        </div>
+
+                    </div>
+
+                    <div class="set_goal_container">
+
+                        <input type="text" id="goal_input" name="userInput" placeholder="enter goal (in min)">
+                        <button id="change_goal_button">set goal</button>
+
+                    </div>
+                </div>
+
+                <h2 id="progress_notif">Please set a new goal for this week</h2>
+            </div>
+
+            <div class="goals_container">
+
+                <div class="goal_container">
+
+
+
+                </div>
+
+                <div class="created_goals_container">
+
+                    <!-- append goals here -->
+
+                </div>
+
+                <div class="goal_buttons_container">
+
+                    <button id="new_goal_button">New Goal</button>
+
+                    <button id="complete_goal_button">Complete Goal(s)</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="journal_main_container">
+
+            <div class= "journal_container">
+
+                <div class="top_container">
+
+                    <button id="close_journal_button">x</button>
+
+                </div>
+
+                <div class="mid_container">
+
+                    <div class="horizontal_container"> 
+
+                        <h3 id="journal_heading" contenteditable="false">Journal</h3>
+
+                        <svg id="edit_icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+                            <path fill="currentColor" d="M21.707 2.293a1 1 0 00-1.414 0L2.293 20.293a1 1 0 001.414 1.414L21.707 3.707a1 1 0 000-1.414zM6 18v-2.586l9.293-9.293 2.586 2.586L8.586 18H6zm10.879-10.879L18 7.586l1.414-1.414 1.414 1.414-1.414 1.414z"/>
+                        </svg>
+
+                    </div>
+
+                    <div class="horizontal_container">
+
+                        <div class="vertical_container">
+                            <label for="location">Date:</label>
+                            <input type="text" id="date" placeholder="N/A">
+                        </div>
+
+                        <div class="vertical_container">
+                            <label for="location">Location:</label>
+                            <input type="text" id="location" placeholder="enter location here">
+                        </div>
+
+                    </div>
+
+                    <div class="horizontal_container"> 
+
+                        <div class="vertical_container">
+                            <label for="start_time">Meditation Start Time:</label>
+                            <input type="text" id="start_time" placeholder="00:00">
+                        </div>
+                        <div class="vertical_container">
+                            <label for="end_time">Meditation End Time:</label>
+                            <input type="text" id="end_time" placeholder="00:00">
+                        </div>
+
+                    </div>
+                    
+                    <div class="horizontal_container"> 
+
+                        <div class="vertical_container">
+                            <label for="type">Meditation</label>
+                            <select style="max-width: 160px;" id="type">
+                                <option value="mindfulness">Mindfulness Meditation</option>
+                                <option value="transcendental">Transcendental Meditation</option>
+                                <option value="loving-kindness">Loving-kindness Meditation</option>
+                                <option value="vipassana">Vipassana Meditation</option>
+                                <option value="zen">Zen Meditation</option>
+                                <option value="guided">Guided Meditation</option>
+                                <option value="body-scan">Body Scan Meditation</option>
+                                <option value="mantra">Mantra Meditation</option>
+                                <option value="chakra">Chakra Meditation</option>
+                                <option value="yoga">Yoga Meditation</option>
+                                <option value="custom">Other Meditation</option>
+                            </select>
+                        </div>
+
+                        <div class="vertical_container">
+                            <label for="customOption">Type:</label>
+                            <input type="text" id="customOption" placeholder="meditation type">
+                        </div>
+
+                    </div>
+
+                    <div class="horizontal_container">  
+
+                        <div class="vertical_container"> 
+                            <label for="mantra">Mantra:</label>
+                            <input type="text" id="mantra" placeholder="enter mantra here">
+                        </div>
+
+                    </div>
+
+                    <div class="horizontal_container">  
+
+                        <div class="vertical_container">  
+                            <label for="observations">Observations:</label>
+                            <textarea style="width: 120%; height: 150px;" id="observations" placeholder="enter observations here"></textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="horizontal_container">  
+
+                        <label for="journal_checkbox">Mark Journal as Complete: </label>
+                        <input type="checkbox" id="journal_checkbox" name="checkbox">
+
+                    </div>
+
+                </div>
+
+                <div class="bottom_container">
+
+                    <div class="horizontal_container">
+
+                        <button id="save_journal_button">Save Journal</button>
+
+                        <div style="width: 50px;"></div>
+
+                        <button id="delete_journal_button">Delete Journal</button>
+
+                    </div>
+
+                </div>
+
+                    
+            </div>
+
+            <div class= "journals_container">
+
+                <div class="search_bar_container">
+
+                    <input type="text" id="search_input" name="userInput" placeholder="Search journals">
+                    <button class="search_button">
+                        <span class="icon">🔍</span> <!-- This span holds the magnifying glass icon -->
+                    </button>
+
+                </div>
+
+                <div class="vertical_container" id="journal_entries">
+
+                    <!-- append journal entries here like this
+                    
+                    <div class="journal_entry_box"> 
+
+                        <button id="journal1">Journal 1</button>
+
+                    </div>
+
+                    -->
+
+                </div>
+
+                <div class="button_container">
+
+                    <button id="new_journal_button">New Journal</button>
+
+                </div>
+            
+            </div>
+
+        </div>
+
+    </div>
+
+
+<script>
+
+    var userCompletedMins = 0;
+    var userGoalMins = 0; 
+    var currentJournalCount = 1;
+    var currentDate = new Date();
+    var formattedDate = ("0" + (currentDate.getMonth() + 1)).slice(-2) + "/" + ("0" + currentDate.getDate()).slice(-2) + "/" + (currentDate.getFullYear() % 100);
+
+    var journalData = {};
+
+    // update the progress bar
+    function updateGoalDisplay() {
+
+        if (userGoalMins == 0) var progressMade = 0;
+        else var progressMade = (userCompletedMins / userGoalMins) * 100;
+
+        document.getElementById('percent_indicator').textContent = `${userCompletedMins}/${userGoalMins}`;
+        const progressBar = document.querySelector('.progress_bar');
+        progressBar.setAttribute('data_progress', `${progressMade}%`);
+        progressBar.style.width = progressMade + '%';
+
+        if (progressMade <= 0) document.getElementById('progress_notif').textContent = `Current goal for this week: ${userGoalMins} minutes`;
+        else document.getElementById('progress_notif').textContent = `${progressMade}% progress has been made this week`;
+
+    }
+
+    // on page load, generate the calender and attach event listeners
+    document.addEventListener("DOMContentLoaded", function() {
+
+        // do local storage with JSON
+
+        // change goal button
+        document.getElementById('change_goal_button').addEventListener('click', function() {
+            userGoalMins = parseInt(document.getElementById('goal_input').value);
+            if (isNaN(userGoalMins) || userGoalMins == 0) {
+                document.getElementById('goal_input').value = "";
+                document.getElementById('goal_input').placeholder = "enter a valid num"
+            }
+            else {
+                document.querySelector('.goals_container').style.visibility = 'visible';
+                updateGoalDisplay();
+            }
+        });
+
+        // complete goal button
+        document.getElementById('complete_goal_button').addEventListener('click', function() {
+            //if (userGoalMins < currentInterval) userGoalMins = 0;
+            //else userGoalMins -= currentInterval;
+            userCompletedMins += 10;
+            updateGoalDisplay();
+        });
+
+        /* split */
+
+        document.getElementById("edit_icon").addEventListener("click", function() {
+            var journalHeading = document.getElementById("journal_heading");
+            journalHeading.setAttribute('contenteditable', true);
+            var range = document.createRange();
+            var selection = window.getSelection();
+            range.selectNodeContents(journalHeading);
+            range.collapse(false);
+            selection.removeAllRanges();
+            selection.addRange(range);
+            journalHeading.focus();
+            //document.execCommand("selectAll", false, null);
+
+        });
+
+        document.getElementById('new_journal_button').addEventListener('click', function() {
+            document.querySelector('.journal_container').style.visibility = 'visible';
+            document.querySelector('.main_container').style.width = '50%';
+
+            // new journal 
+            document.getElementById("journal_heading").textContent = `Journal ${1}`;
+            document.getElementById("date").value = `${formattedDate}`;
+            document.getElementById("start_time").value = `${currentDate.getHours()}:${(currentDate.getMinutes() < 10 ? "0" + currentDate.getMinutes() : currentDate.getMinutes())}`
+            document.getElementById("end_time").value = `${currentDate.getHours()}:${(currentDate.getMinutes() < 10 ? "0" + currentDate.getMinutes() : currentDate.getMinutes())}`
+
+        });
+
+        document.getElementById('close_journal_button').addEventListener('click', function() {
+            document.querySelector('.journal_container').style.visibility = 'collapse';
+            document.querySelector('.main_container').style.width = '80%';
+        });
+
+        document.getElementById("type").addEventListener("change", function() {
+            var selectedOption = this.value;
+            document.getElementById('customOption').value = selectedOption;
+            console.log(selectedOption);
+            /*
+            if (this.value === 'Other Meditation') {
+                //document.querySelector('.custom_container').style.display = 'flex';
+                document.getElementById('customOption').value = selectedOption;
+            } else {
+
+                //document.querySelector('.custom_container').style.display = 'collapse';
+            }*/
+        });
+
+        // journal check box
+        document.getElementById("journal_checkbox").addEventListener('change', function() {
+            if(this.checked) {
+            console.log('Checkbox is checked');
+            } else {
+            console.log('Checkbox is not checked');
+            }
+        });
+
+        document.getElementById("save_journal_button").addEventListener("click", function() {
+            
+            // if the journal name already replaced the data inside
+            if (false) {
+                console.log("");
+            }
+            // else create a new journal entry
+            else {
+
+                // Create a container div
+                var containerDiv = document.createElement("div");
+                containerDiv.className = "journal_entry_box";
+
+                // Create a button
+                var button = document.createElement("button");
+                button.textContent = `Journal ${currentJournalCount}`;
+                button.id = `journal${currentJournalCount}`;
+                currentJournalCount++;
+
+                // Append the button to the container div
+                containerDiv.appendChild(button);
+
+                // Append the container div to the document body
+                document.getElementById("journal_entries").appendChild(containerDiv);
+
+                
+            }
+
+        });
+
+        if (userGoalMins != 0) {
+            document.querySelector('.goals_container').style.visibility = 'visible';
+            updateGoalDisplay();
+        }
+
+        // command + a all the text when clicking on an input box
+        var inputs = document.querySelectorAll('input[type="text"]');
+        inputs.forEach(function(input) {
+            input.addEventListener('click', function() {
+                this.select();
+            });
+        });
+        
+
+        //console.log(formattedDate);
+
+        
+    });
+
+</script>
+
+</body>
+</html>
+
+
