@@ -5,25 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meditation Timer</title>
     <style>
-        :root {
-            --timer-margin-top: 24vh;
-            --timer-margin-bottom:20vh;
-            --border-radius: 20px;
-            --flex-direction: column;
-            --toggle-header:block;
-            --toggle-timer-container-ordering:block;
-            --padding-radius:20px;
-            --time-container-background:rgba(135, 206, 235, 0.75); 
-        }
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-image: url('images/beachBackground.webp');
+            background-image: url('images/mountainBackground-transformed.jpeg');
+            background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            background-size: cover;
-            background-attachment: fixed;
             margin: 0;
             padding: 0;
             display: flex;
@@ -41,18 +30,7 @@
             display: flex; /* Ensures flexibility in child alignment */
             align-items: center; /* Aligns children vertically in the center */
             justify-content: flex-start; /* Aligns children to the left */
-        }
-        .collapsed {
-            margin-top: 0; /* Removes upper margin */
-            padding: 5px; /* Reduces padding */
-            width: 200px; /* Sets a fixed width */
-            height: 50px; /* Sets a fixed height */
-            overflow: hidden; /* Hides the overflow */
-            position: absolute; /* Makes positioning relative to nearest positioned ancestor */
-            top: 60px; /* Position right below the user bar (adjust based on user bar height) */
-            left: 50%; /* Center align */
-            transform: translateX(-50%); /* Ensures it is centered by translating it half its width to the left */
-            transition: all 0.3s; /* Smooth transition for toggling */
+            margin-bottom: 24vh;
         }
         .avatar {
           background-color: #ffffff; /* White */
@@ -88,17 +66,12 @@
           display: block;
         }
         .timer-container {
-          background-color: var(--time-container-background);
-          padding: var(--padding-radius);
-          display: var(--toggle-timer-container-ordering); 
-          border-radius: var(--border-radius);
-          margin-top:var(--timer-margin-top);
-          margin-bottom: var(--timer-margin-bottom);
+          background-color: rgba(135, 206, 235, 0.75);
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 32vh;
         }
-        .enabled-header {
-            user-select: none; /* Prevent text selection */
-            display: var(--toggle-header);
-        }
+
         .timer {
             font-size: 48px;
             margin: 20px 0;
@@ -152,8 +125,7 @@
   </div>
 </div>
 <div class="timer-container">
-    <button id="toggleButton" class="button toggle-button">Toggle</button>
-    <h2 id = 'meditationTitle'class ="enabled-header">Let's start meditation!</h2>
+    <h2>Let's start meditation!</h2>
     <div id="timer" class="timer">00:00:00</div>
     <button id="startButton" class="button start-button">Start</button>
     <button id="pauseButton" class="button pause-button">Pause</button>
@@ -164,8 +136,8 @@
     <button id="muteButton" class="button mute-button">Mute</button>
     <button id="unmuteButton" class="button unmute-button">Unmute</button>
 </div>
-<script>
 
+<script>
     let startTime;
     let updatedTime;
     let difference;
@@ -174,33 +146,7 @@
     let paused = false;
     let savedTime = 0;
     let timeStarted;
-    var r = document.querySelector(':root');
-    function toggleTimer(){
-        var rs = getComputedStyle(r)
 
-        if (rs.getPropertyValue('--timer-margin-top') === "24vh") {
-          
-          // Code to reset the timer and stop music
-          r.style.setProperty('--timer-margin-top','0vh');
-          r.style.setProperty('--timer-margin-bottom','64vh');
-          r.style.setProperty('--border-radius','0px');
-          r.style.setProperty('--padding-radius','0px');
-          r.style.setProperty('--toggle-header','none');
-          r.style.setProperty('--toggle-timer-container-ordering','flex')
-          r.style.setProperty('--time-container-background','rgba(135, 206, 235, 0.0)');
-        } 
-        else{
-          r.style.setProperty('--timer-margin-top','24vh');
-          r.style.setProperty('--timer-margin-bottom','20vh');
-          r.style.setProperty('--border-radius','20px');
-          r.style.setProperty('--padding-radius','20px');
-          r.style.setProperty('--toggle-header','block');
-          r.style.setProperty('--toggle-timer-container-ordering','block')
-          r.style.setProperty('--time-container-background','rgba(135, 206, 235, 0.75)');
-        }
-
-
-    }
     function startTimer(){
       if(!running){
         startTime = new Date().getTime();
@@ -252,7 +198,7 @@
       seconds = (seconds < 10) ? "0" + seconds : seconds;
       document.getElementById("timer").innerHTML = hours + ':' + minutes + ':' + seconds;
     }
-    document.getElementById("toggleButton").addEventListener("click", toggleTimer);
+
     document.getElementById("startButton").addEventListener("click", startTimer);
     document.getElementById("pauseButton").addEventListener("click", pauseTimer);
     document.getElementById("endButton").addEventListener("click", endTimer);

@@ -435,19 +435,30 @@
 
     <div class="user-bar">
         <div class="user-info">
-            <span class="avatar"></span>
-            <span class="username">Zayn407 »
+          <span class="avatar"></span>
+          <span class="username">Zayn407 »
             <div class="dropdown-content">
+<<<<<<< HEAD
                 <a href="https://zayn407.github.io/ZenConnect/">Home</a>
                 <a href="journal_progress.html">Progress</a>
                 <a href="chat_page.html">Chat</a>
                 <a href="meetingAndMeditation.html">Meditation</a>
                 <a href="exploration.html">Exploration</a>
                 <a href="social_page.html">Social</a>
+=======
+              <a href="exploration.html">Exploration</a>
+              <a href="journal_progress.html">Progress</a>
+              <a href="journal.html">Journal</a>
+              <a href="chat_page.html">Chat</a>
+              <a href="social_page.html">Social</a>
+              <a href="videoMeetPage.html">Video Meet Page</a>
+              <a href="meditation.html">Meditation</a>
+              <a href="index.html">Welcome Page</a>
+>>>>>>> fa8d5f5f3c29e85b6e328a5a82631fe4c246b47e
             </div>
-            </span>
+          </span>
         </div>
-    </div>
+      </div>
 
     <div class="root_container">
         
@@ -789,8 +800,8 @@
     var formattedDate = ("0" + (currentDate.getMonth() + 1)).slice(-2) + "/" + ("0" + currentDate.getDate()).slice(-2) + "/" + (currentDate.getFullYear() % 100);
 
     // update the progress bar
+    // update the progress bar and save progress to localStorage
     function updateGoalDisplay() {
-
         if (userGoalMins == 0) var progressMade = 0;
         else var progressMade = Math.round((userCompletedMins / userGoalMins) * 100);
 
@@ -885,7 +896,11 @@
         document.getElementById("mood_wheel").value = journalMap[num]["mood_wheel"];
         document.getElementById("journal_checkbox").checked = journalMap[num]["completed"];
 
+        // Save progress to localStorage
+        localStorage.setItem('userGoalMins', userGoalMins);
+        localStorage.setItem('userCompletedMins', userCompletedMins);
     }
+
 
     // on page load, generate the calender and attach event listeners
     document.addEventListener("DOMContentLoaded", function() {
