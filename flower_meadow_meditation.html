@@ -248,7 +248,12 @@
       if (savedTime) {
         let storedTime = localStorage.getItem('meditatedTime'); // Get stored time from localStorage
         storedTime = storedTime ? parseInt(storedTime) : 0; // Parse the stored time or set to 0 if null
+        storedTime = (Math.floor(storedTime / 60) * 1000); // Convert stored time to seconds
+        // console.log("savedTime: " + savedTime)
         storedTime += savedTime; // Add the current session's time
+        // console.log("Time stored: " + storedTime);
+        // convert time interval to seconds 
+        storedTime = (Math.floor(storedTime / 1000) * 60);
         localStorage.setItem('meditatedTime', storedTime); // Store the updated time back in localStorage
       }
       paused = false;

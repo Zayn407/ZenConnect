@@ -241,13 +241,30 @@
 
     function endTimer(){
       clearInterval(tInterval);
-      savedTime = 0;
-      difference = 0;
+      if (!paused) {
+        // Update the saved time if the timer was not paused when ended
+        savedTime = difference;
+      }
+      if (savedTime) {
+        let storedTime = localStorage.getItem('meditatedTime'); // Get stored time from localStorage
+        storedTime = storedTime ? parseInt(storedTime) : 0; // Parse the stored time or set to 0 if null
+        storedTime = (Math.floor(storedTime / 60) * 1000); // Convert stored time to seconds
+        // console.log("savedTime: " + savedTime)
+        storedTime += savedTime; // Add the current session's time
+        // console.log("Time stored: " + storedTime);
+        // convert time interval to seconds 
+        storedTime = (Math.floor(storedTime / 1000) * 60);
+        localStorage.setItem('meditatedTime', storedTime); // Store the updated time back in localStorage
+      }
       paused = false;
       running = false;
       document.getElementById("timer").innerHTML = "00:00:00";
       document.getElementById("meditationMusic").pause();
       document.getElementById("meditationMusic").currentTime = 0;
+      console.log("Total time meditated: " + localStorage.getItem('meditatedTime'));
+
+      savedTime = 0; // Reset savedTime after storing
+      difference = 0; // Reset difference
     }
 
     function getShowTime(){

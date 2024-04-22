@@ -280,7 +280,8 @@
     }
   }
 
-  function deleteGoal() {
+  function deleteGoal() { 
+    localStorage.removeItem('meditatedTime')
     localStorage.removeItem('currentGoal');
     currentGoal = null;
     displayGoal();
@@ -289,18 +290,22 @@
   }
 
   function updateProgress() {
-    let meditatedTime = localStorage.getItem('meditatedTime') || 0;
-    if (currentGoal) {
-      const progressBar = document.querySelector('.progress-bar');
-      let progressPercentage = Math.max(0, Math.min((meditatedTime / currentGoal.goalTime) * 100, 100));
-      progressBar.style.width = `${progressPercentage}%`;
-      progressBar.textContent = `${Math.floor(progressPercentage)}%`;
-      document.querySelector('.progress-bar-container').style.display = 'block';
-      document.querySelector('.no-goal-message').style.display = 'none';
-    } else {
-      document.querySelector('.progress-bar-container').style.display = 'none';
-      document.querySelector('.no-goal-message').style.display = 'block';
-    }
+      let meditatedTime = parseInt(localStorage.getItem('meditatedTime'), 10) || 0;
+      console.log("Meditated Time (seconds):", meditatedTime);
+      console.log("Current Goal:", currentGoal);
+
+      if (currentGoal) {
+        const progressBar = document.querySelector('.progress-bar');
+        // Ensure both meditatedTime and currentGoal.goalTime are integers for accurate division
+        let progressPercentage = Math.max(0, Math.min((meditatedTime / currentGoal.goalTime) * 100, 100));
+        progressBar.style.width = `${progressPercentage}%`;
+        progressBar.textContent = `${Math.floor(progressPercentage)}%`;
+        document.querySelector('.progress-bar-container').style.display = 'block';
+        document.querySelector('.no-goal-message').style.display = 'none';
+      } else {
+        document.querySelector('.progress-bar-container').style.display = 'none';
+        document.querySelector('.no-goal-message').style.display = 'block';
+      }
   }
 
   function loadJournals() {
