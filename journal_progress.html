@@ -1177,6 +1177,18 @@
                 this.select();
             });
         });
+
+        var userGoalMinsLocal = localStorage.getItem('userGoalMins');
+        var userCompletedMinsLocal = localStorage.getItem('userCompletedMins');
+
+        if (userGoalMinsLocal && userCompletedMinsLocal) {
+            userGoalMins = userGoalMinsLocal;
+            userCompletedMins = userCompletedMinsLocal;
+        }
+        else {
+            localStorage.setItem('userGoalMins', userGoalMins);
+            localStorage.setItem('userCompletedMins', userCompletedMins);
+        }
         
 
         //console.log(formattedDate);
