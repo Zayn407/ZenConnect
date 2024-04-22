@@ -14,13 +14,13 @@ body {
     background-repeat: no-repeat;
   }
   .search-container {
-    background-color: rgba(207, 226, 243, 0.3);
+    background-color: rgba(207, 226, 243, 0.5);
     text-align: center;
     padding: 20px;
   }
   .search-header {
-    color: #9999ff;
-    font-size: 30pt;
+    color: #7777b6;
+    font-size: 40pt;
     font-weight: bold;
     font-family: 'Amatic SC', cursive;
   }
