@@ -777,6 +777,8 @@
 
 <script>
 
+    let journalLocalMap = localStorage.getItem('journalMap');
+    let goalLocalMap = localStorage.getItem('goalMap');
     var journalMap = new Map();
     var goalMap = new Map();
     var userCompletedMins = 0;
@@ -861,7 +863,23 @@
         journalMap[num]["observations"] = document.getElementById("observations").value;
         journalMap[num]["mood_wheel"] = document.getElementById("mood_wheel").value;
         journalMap[num]["completed"] = document.getElementById("journal_checkbox").checked;
+        //console.log(goalMap);
         if (document.getElementById("journal_checkbox").checked) {
+            var allGoals = document.getElementById("goal_entries").querySelectorAll("div");
+            allGoals.forEach(function(div) {
+                var values = goalMap[div.querySelector("button").id.replace("goal", "")];
+                //console.log(values["type"] + " vs " + journalMap[num]["type"]);
+                if (values["type"] === journalMap[num]["type"]) { // if the journal entry type matches any goals
+                    console.log(parseInt(values["goal_min"]) + " vs " + calculateTotalMinutesDifference(journalMap[num]["start_time"], journalMap[num]["end_time"]));
+                    if (parseInt(values["goal_min"]) <= calculateTotalMinutesDifference(journalMap[num]["start_time"], journalMap[num]["end_time"])) { // if the journal entry completed the goal
+                        document.querySelector('.goal_container').style.visibility = 'collapse';
+                        document.getElementById(`goal${div.querySelector("button").id.replace("goal", "")}`).parentElement.remove();
+                        // remove from map
+                        goalMap.delete(`${div.querySelector("button").id.replace("goal", "")}`);
+                    }
+                }
+
+            });
             userCompletedMins += calculateTotalMinutesDifference(journalMap[num]["start_time"], journalMap[num]["end_time"]);
             updateGoalDisplay();
         }
@@ -1178,6 +1196,10 @@
         var userGoalMinsLocal = localStorage.getItem('userGoalMins');
         var userCompletedMinsLocal = localStorage.getItem('userCompletedMins');
 
+        localStorage.setItem('journalMap', JSON.stringify(Array.from(journalMap.entries())));
+        localStorage.setItem('goalMap', JSON.stringify(Array.from(goalMap.entries())));
+
+        /*
         if (userGoalMinsLocal && userCompletedMinsLocal) {
             userGoalMins = userGoalMinsLocal;
             userCompletedMins = userCompletedMinsLocal;
@@ -1185,8 +1207,9 @@
         else {
             localStorage.setItem('userGoalMins', userGoalMins);
             localStorage.setItem('userCompletedMins', userCompletedMins);
-        }
+        }*/
         
+        localStorage.clear();
 
         //console.log(formattedDate);
 
