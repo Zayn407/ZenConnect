@@ -1115,8 +1115,8 @@
                     //console.log(values);
                     for (key in values) {
                         var value = values[key].toString();
-                        console.log(value + " vs " + search_text);
-                        if (value.includes(search_text)) {
+                        //console.log(value + " vs " + search_text);
+                        if (value.toLowerCase().includes(search_text.toLowerCase())) {
                             found = true;
                             break; 
                         }
@@ -1141,6 +1141,7 @@
         document.getElementById("clear_button").addEventListener('click', function() { 
 
             var journalBoxes = Array.from(document.getElementsByClassName("journal_entry_box"));
+            document.getElementById("search_input").value = "";
             journalBoxes.forEach(function(journalBox) {
                 journalBox.style.display = "block";
             });
