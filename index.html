@@ -1,17 +1,3 @@
-<!-- 
-    File: welcome.html
-    Project: ZenConnect - Group 12
-    Course: UIC - CS422
-    Author: Shenfan Feng
-
-    Purpose: This HTML page acts as the welcome interface for the ZenConnect meditation app, providing users with an engaging and informative start point to the application.
-
-    Features:
-    - User greeting with dynamic 'Welcome' header.
-    - User interaction through a drop-down menu linked to 'Username', offering navigation to various sections of the app like Goals, Journal, Chat, Meditation, Exporation and social.
-    - A progress bar indicating the user's current meditation progress or other relevant metrics.
-    - Inspirational taglines to encourage and motivate users as they begin their meditation journey.
--->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,10 +17,10 @@
     background-attachment: fixed;
     height: 100%;
     min-height: 100vh;
+    transition: opacity 0.5s ease-in;
   }
   .welcome-container {
-    background-color: #cfe2f3;
-    color: #0000ff;
+    color: #FFFFFF; /* White text */
     font-family: 'Amatic SC', cursive;
     padding: 20px;
     text-align: center;
@@ -42,14 +28,18 @@
     z-index: 1;
   }
   .welcome-header {
-    color: #9999ff;
-    font-size: 45pt;
+    background-color: rgba(51, 102, 204, 0.8); /* Semi-transparent blue */
+    color: #FFFFFF; /* White text */
+    font-size: 48pt;
     font-weight: bold;
+    padding: 10px;
+    border-radius: 10px; /* Rounded corners */
+    display: inline-block; /* Fits content width */
   }
   .user-bar {
-    background-color: #999999;
     padding: 10px 20px;
     position: relative;
+    display: inline-block;
     z-index: 1000;
   }
   .avatar {
@@ -75,38 +65,53 @@
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1000;
   }
-  .user-info:hover .dropdown-content {
-    display: block;
-  }
   .dropdown-content a {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
   }
-  .progress-container {
-    background-color: #ddd;
-    height: 40px;
-    width: 60%;
-    margin: 40px auto;
-  }
-  .progress-bar {
-    background-color: #4CAF50;
-    height: 100%;
-    width: 0%; /* Initial width will be set by JavaScript */
+  .user-info:hover .dropdown-content {
+    display: block;
   }
   .tagline-container {
-    background-color: #d9ead3;
+    background-color: rgba(51, 102, 204, 0.8); /* Semi-transparent blue */
+    color: white; /* White text for contrast */
+    background-color: transparent; /* Slight transparency */
     padding: 10px;
     margin-top: 20px;
   }
   .welcome-tagline {
-    font-size: 14pt;
+    background-color: rgba(51, 102, 204, 0.8); /* Semi-transparent blue */
+    font-size: 32pt; /* Slightly larger for better readability */
     margin: 10px 0;
+    display: inline-block; /* Make background only cover the text */
+    padding: 5px 10px; /* Padding around the text for some space inside the background */
+}
+  .meditation-button {
+    padding: 10px 20px;
+    font-size: 16pt;
+    background-color: transparent; /* Transparent background */
+    color: white;
+    border: 2px solid white; /* White border */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: absolute; /* Positioning relative to the parent */
+    top: 130%;
+    background-color: rgba(51, 102, 204, 0.8); /* Semi-transparent blue */
+    transform: translate(-50%, -50%); /* Adjust both horizontally and vertically */
+}
+  .meditation-button:hover {
+    background-color: rgba(51, 102, 204, 0.8); /* Semi-transparent blue */
+    color: #4CAF50; /* Green text to match the progress bar */
   }
 </style>
 </head>
-<body>
+<body onload="fadeInBody()">
+  <audio autoplay loop>
+    <source src="./MeditationMusic/forest.mp3" type="audio/mpeg">
+  </audio>
 
 <div class="user-bar">
   <div class="user-info">
@@ -122,31 +127,42 @@
   </div>
 </div>
 
+
 <div class="welcome-container">
-  <h1 class="welcome-header">WELCOME</h1>
-  <div class="progress-container">
-    <div class="progress-bar"></div>
-  </div>
+  <h1 class="welcome-header">WELCOME TO ZENCONNECT</h1>
   <div class="tagline-container">
     <p class="welcome-tagline">"BREATHE DEEPLY, RELEASE STRESS, EMBRACE THE MOMENT."</p>
+    <p></p>
     <p class="welcome-tagline">"GUIDED MEDITATION, CALM YOUR MIND, FIND INNER PEACE."</p>
+    <p></p>
     <p class="welcome-tagline">"FOCUS ON THE PRESENT, FEEL THE INNER SELF, BEGIN YOUR JOURNEY."</p>
   </div>
+  <button class="meditation-button" onclick="startTransition()">Start ZenConnect</button>
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Check if there is saved progress in localStorage
   var userGoalMins = localStorage.getItem('userGoalMins');
   var userCompletedMins = localStorage.getItem('userCompletedMins');
 
   if (userGoalMins && userCompletedMins) {
     var progressMade = (userCompletedMins / userGoalMins) * 100;
-
     const progressBar = document.querySelector('.progress-bar');
     progressBar.style.width = progressMade + '%';
   }
 });
+
+function startTransition() {
+  document.body.style.opacity = '0';
+  setTimeout(function() {
+    window.location.href = 'meditation.html';
+  }, 800);
+}
+
+function fadeInBody() {
+  document.body.style.opacity = '1';
+}
+
 </script>
 
 </body>
