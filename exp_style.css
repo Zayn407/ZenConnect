@@ -37,7 +37,7 @@ body {
     pointer-events: none;
   }
   .user-bar {
-    background-color: #999999; /* RGB: 153, 153, 153 */
+    background-color: transparent; /* RGB: 153, 153, 153 */
     padding: 10px 20px;
     position: relative;
     z-index: 1000; /* Ensures the user bar stays above other content */
@@ -61,12 +61,15 @@ body {
     display: block;
   }
   .avatar {
-    background-color: #ffffff; /* White */
+    background-color: #ffffff;
     border-radius: 50%;
     width: 30px;
     height: 30px;
     display: inline-block;
     vertical-align: middle;
+    background-image: url('https://static.vecteezy.com/system/resources/previews/036/242/436/original/budha-icon-clipart-avatar-logotype-isolated-illustration-vector.jpg');
+    background-size: cover; /* Ensures the image covers the entire element */
+    background-position: center; /* Centers the image within the element */
   }
   .username {
     color: #ffffff;

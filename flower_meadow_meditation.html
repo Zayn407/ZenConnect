@@ -33,7 +33,7 @@
             text-align: center;
         }
         .user-bar {
-          background-color: rgba(153, 153, 153, 0.6); /* Light gray with 60% opacity */
+            background-color: transparent; /* Light gray with 60% opacity */
             padding: 10px 20px;
             position: relative;
             z-index: 1000;
@@ -55,13 +55,15 @@
             transition: all 0.3s; /* Smooth transition for toggling */
         }
         .avatar {
-          background-color: #ffffff; /* White */
-          margin-left:20px;
+          background-color: #ffffff;
           border-radius: 50%;
           width: 30px;
           height: 30px;
           display: inline-block;
           vertical-align: middle;
+          background-image: url('https://static.vecteezy.com/system/resources/previews/036/242/436/original/budha-icon-clipart-avatar-logotype-isolated-illustration-vector.jpg');
+          background-size: cover; /* Ensures the image covers the entire element */
+          background-position: center; /* Centers the image within the element */
         }
         .username {
           color: #ffffff;
@@ -153,7 +155,7 @@
       <span class="username">Zayn407 »
         <div class="dropdown-content">
           <a href="index.html">Home</a>
-          <a href="journal_progress.html">Progress</a>
+          <a href="test.html">Progress</a>
           <a href="meditation.html">Meditation Sessions</a>
           <a href="exploration.html">Exploration</a>
         </div>
@@ -239,14 +241,27 @@
 
     function endTimer(){
       clearInterval(tInterval);
-      savedTime = 0;
-      difference = 0;
+      if (!paused) {
+        // Update the saved time if the timer was not paused when ended
+        savedTime = difference;
+      }
+      if (savedTime) {
+        let storedTime = localStorage.getItem('meditatedTime'); // Get stored time from localStorage
+        storedTime = storedTime ? parseInt(storedTime) : 0; // Parse the stored time or set to 0 if null
+        storedTime += savedTime; // Add the current session's time
+        localStorage.setItem('meditatedTime', storedTime); // Store the updated time back in localStorage
+      }
       paused = false;
       running = false;
       document.getElementById("timer").innerHTML = "00:00:00";
       document.getElementById("meditationMusic").pause();
       document.getElementById("meditationMusic").currentTime = 0;
+      console.log("Total time meditated: " + localStorage.getItem('meditatedTime'));
+
+      savedTime = 0; // Reset savedTime after storing
+      difference = 0; // Reset difference
     }
+
 
     function getShowTime(){
       updatedTime = new Date().getTime();

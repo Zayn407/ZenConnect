@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Goal and Journal Tracker</title>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: url('https://images.unsplash.com/photo-1708614896043-9ff9d03d641d?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=1080&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTcxMzc2OTI3Mw&ixlib=rb-4.0.3&q=80&w=1920') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    color: #333;
+  }
+  .user-bar {
+    color: transparent;
+    padding: 10px 20px;
+    position: relative;
+    display: inline-block;
+    z-index: 1000;
+  }
+
+  .avatar {
+    background-color: #ffffff;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    vertical-align: middle;
+    background-image: url('https://static.vecteezy.com/system/resources/previews/036/242/436/original/budha-icon-clipart-avatar-logotype-isolated-illustration-vector.jpg');
+    background-size: cover; /* Ensures the image covers the entire element */
+    background-position: center; /* Centers the image within the element */
+  }
+
+  .username {
+    color: #ffffff;
+    margin-left: 10px;
+    vertical-align: middle;
+    cursor: pointer;
+  }
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    left: 20px;
+    background-color: transparent;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1000;
+  }
+  .dropdown-content a {
+    color: transparent;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  .user-info:hover .dropdown-content {
+    display: block;
+  }
+  .container {
+  width: 90%;
+  max-width: 600px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  margin-top: 70px; /* Increased margin-top to push it below the fixed user bar */
+}
+  .progress-bar-container, .no-goal-message {
+    width: 100%;
+    margin: 20px 0;
+  }
+  .progress-bar-container {
+    background-color: #ddd;
+    border-radius: 5px;
+    height: 20px;
+  }
+  .progress-bar {
+    height: 100%;
+    background-color: #4CAF50;
+    width: 0%;
+    border-radius: 5px;
+  }
+  input, textarea, button, select {
+    margin: 5px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 90%;
+  }
+  button {
+    cursor: pointer;
+    background-color: #5c67f2;
+    color: white;
+    width: auto;
+  }
+  .modal, .overlay {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+  }
+  .overlay {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  .modal {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    width: 500px;
+  }
+  .modal-content, .modal-footer {
+    margin-bottom: 10px;
+  }
+  .modal-footer {
+    display: flex;
+    justify-content: space-between;
+  }
+  .journal-entry {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  textarea[readonly] {
+    background: #f0f0f0; /* Lighter background for read-only mode */
+    cursor: default;
+  }
+  .user-bar {
+    padding: 10px 20px;
+    position: fixed; /* Updated from relative to fixed */
+    top: 0; /* Ensures it's always at the top */
+    left: 0; /* Aligns it to the left edge */
+    width: 100%; /* Full width of the viewport */
+    background-color: transparent; /* Make sure the background is not transparent */
+    color: white; /* Text color for visibility */
+    z-index: 1000; /* High z-index to keep it above other elements */
+  }
+
+  .avatar {
+    background-color: transparent;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .username {
+    color: #ffffff;
+    margin-left: 10px;
+    vertical-align: middle;
+    cursor: pointer;
+  }
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    left: 20px;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1000;
+  }
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  .user-info:hover .dropdown-content {
+    display: block;
+  }
+</style>
+</head>
+<div class="user-bar">
+  <div class="user-info">
+    <span class="avatar"></span>
+    <span class="username">Zayn407 »
+      <div class="dropdown-content">
+        <a href="index.html">Home</a>
+        <a href="test.html">Progress</a>
+        <a href="meditation.html">Meditation Sessions</a>
+        <a href="exploration.html">Exploration</a>
+      </div>
+    </span>
+  </div>
+</div>
+<body>
+
+<div class="overlay" onclick="closeModal()"></div>
+<div class="modal">
+  <div id="modalContent"></div>
+  <div class="modal-footer">
+    <button onclick="closeModal()">Close</button>
+  </div>
+</div>
+<div class="container">
+  <h2>Goals & Journal Tracker</h2>
+  <div class="progress-bar-container">
+    <div class="progress-bar"></div>
+  </div>
+  <div class="no-goal-message" style="display: none;">No goal set yet.</div>
+  <div id="goalSetting">
+    <input type="number" id="goalHours" placeholder="Hours" min="0" max="99" style="width: 80px;">
+    <input type="number" id="goalMinutes" placeholder="Minutes" min="0" max="59" style="width: 80px;">
+    <button onclick="setGoal()">Set Goal</button>
+  </div>
+  <div id="goalsContainer" class="entry-container"></div>
+  <h3>Journal Entries</h3>
+  <button onclick="openModal('add')">Add Journal Entry</button>
+  <div id="journalsContainer" class="entry-container"></div>
+</div>
+<audio autoplay loop>
+  <source src="./MeditationMusic/goal.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+<script>
+  let currentGoal = null;
+  let journals = [];
+
+  document.addEventListener("DOMContentLoaded", function() {
+    loadGoal();
+    loadJournals();
+  });
+
+
+  function setGoal() {
+    const hours = parseInt(document.getElementById('goalHours').value) || 0;
+    const minutes = parseInt(document.getElementById('goalMinutes').value) || 0;
+    const totalSeconds = (hours * 3600 + minutes * 60) * 100;
+    if (totalSeconds > 0) {
+      currentGoal = { goalTime: totalSeconds, meditatedTime: 0 };
+      localStorage.setItem('currentGoal', JSON.stringify(currentGoal));
+      displayGoal();
+      updateProgress();
+      document.getElementById('goalSetting').style.display = 'none';
+    }
+  }
+
+  function loadGoal() {
+    const storedGoal = localStorage.getItem('currentGoal');
+    if (storedGoal) {
+      currentGoal = JSON.parse(storedGoal);
+      displayGoal();
+      updateProgress();
+    }
+  }
+
+  function displayGoal() {
+    const container = document.getElementById('goalsContainer');
+    container.innerHTML = '';
+    if (currentGoal) {
+      const entry = document.createElement('div');
+      entry.textContent = `Goal: ${Math.floor(currentGoal.goalTime / 360000)}h ${(currentGoal.goalTime / 6000) % 60}m`;
+      const deleteBtn = document.createElement('button');
+      deleteBtn.textContent = 'Delete Goal';
+      deleteBtn.onclick = function() { deleteGoal(); };
+      entry.appendChild(deleteBtn);
+      container.appendChild(entry);
+      document.getElementById('goalSetting').style.display = 'none';
+    } else {
+      document.getElementById('goalSetting').style.display = 'block';
+    }
+  }
+
+  function deleteGoal() {
+    localStorage.removeItem('currentGoal');
+    currentGoal = null;
+    displayGoal();
+    updateProgress();
+    document.getElementById('goalSetting').style.display = 'block';
+  }
+
+  function updateProgress() {
+    let meditatedTime = localStorage.getItem('meditatedTime') || 0;
+    if (currentGoal) {
+      const progressBar = document.querySelector('.progress-bar');
+      let progressPercentage = Math.max(0, Math.min((meditatedTime / currentGoal.goalTime) * 100, 100));
+      progressBar.style.width = `${progressPercentage}%`;
+      progressBar.textContent = `${Math.floor(progressPercentage)}%`;
+      document.querySelector('.progress-bar-container').style.display = 'block';
+      document.querySelector('.no-goal-message').style.display = 'none';
+    } else {
+      document.querySelector('.progress-bar-container').style.display = 'none';
+      document.querySelector('.no-goal-message').style.display = 'block';
+    }
+  }
+
+  function loadJournals() {
+    const storedJournals = localStorage.getItem('journals');
+    if (storedJournals) {
+      journals = JSON.parse(storedJournals);
+      displayJournals();
+    }
+  }
+
+  function openModal(mode, index) {
+    const modalContent = document.getElementById('modalContent');
+    const modalFooter = document.querySelector('.modal-footer');
+    if (mode === 'add') {
+      modalContent.innerHTML = `
+        <input type="text" id="journalTitle" placeholder="Title">
+        <input type="date" id="journalDate" value="${new Date().toISOString().split('T')[0]}">
+        <textarea id="journalText" placeholder="Journal content" style="width:95%; height:150px;"></textarea>
+      `;
+      modalFooter.innerHTML = `
+        <button onclick="closeModal()">Close</button>
+        <button onclick="addJournal()">Save Journal</button>
+      `;
+    } else if (mode === 'view') {
+      const journal = journals[index];
+      modalContent.innerHTML = `
+        <div><strong>Date:</strong> ${journal.date}</div>
+        <div><strong>Title:</strong> ${journal.title}</div>
+        <textarea readonly style="width:95%; height:150px; background: #f0f0f0; cursor: default;">${journal.content}</textarea>
+      `;
+      modalFooter.innerHTML = `
+        <button onclick="closeModal()">Close</button>
+        <button onclick="deleteJournal(${index})">Delete Journal</button>
+      `;
+    }
+    document.querySelector('.modal').style.display = 'block';
+    document.querySelector('.overlay').style.display = 'block';
+  }
+
+  function closeModal() {
+    document.querySelector('.modal').style.display = 'none';
+    document.querySelector('.overlay').style.display = 'none';
+  }
+
+  function addJournal() {
+    const title = document.getElementById('journalTitle').value;
+    const date = document.getElementById('journalDate').value;
+    const content = document.getElementById('journalText').value;
+    if (title && date && content) {
+      journals.push({ title, date, content });
+      localStorage.setItem('journals', JSON.stringify(journals));
+      closeModal();
+      displayJournals();
+    }
+  }
+
+  function displayJournals() {
+    const container = document.getElementById('journalsContainer');
+    container.innerHTML = '';
+    journals.forEach((journal, index) => {
+      const entry = document.createElement('div');
+      entry.className = 'journal-entry';
+      entry.innerHTML = `<div class="journal-text">${journal.date} - ${journal.title}</div>
+        <button onclick="openModal('view', ${index})">View</button>`;
+      container.appendChild(entry);
+    });
+  }
+
+  function deleteJournal(index) {
+    journals.splice(index, 1);
+    localStorage.setItem('journals', JSON.stringify(journals));
+    displayJournals();
+    closeModal();
+  }
+</script>
+</body>
+</html>
