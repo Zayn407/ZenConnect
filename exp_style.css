@@ -14,7 +14,7 @@ body {
     background-repeat: no-repeat;
   }
   .search-container {
-    background-color: #cfe2f3;
+    background-color: rgba(207, 226, 243, 0.3);
     text-align: center;
     padding: 20px;
   }
