@@ -1032,6 +1032,8 @@
             else {
                 document.getElementById("progress_notif").textContent = `Goal "${document.getElementById("goal_heading").textContent}" saved.`;
                 updateGoalMap(currentGoalID);
+                // update local storage 
+                localStorage.setItem('goalMap', JSON.stringify(Array.from(goalMap.entries())));
             }
             console.log(goalMap);
 
@@ -1175,6 +1177,9 @@
             document.getElementById('progress_notif').textContent = `Journal "${document.getElementById("journal_heading").textContent}" has been saved.`;
             console.log(journalMap);
 
+            // update local storage 
+            localStorage.setItem('journalMap', JSON.stringify(Array.from(journalMap.entries())));
+
         });
 
         document.getElementById('delete_journal_button').addEventListener('click', function() {
@@ -1197,23 +1202,30 @@
             });
         });
 
+        // event listener for '`' keypress to delete local storage for testing
+        document.addEventListener("keypress", function(event) {
+            if (event.key === '`') {
+                localStorage.clear();
+                console.log("Local storage cleared.");
+            }
+        });
+
         var userGoalMinsLocal = localStorage.getItem('userGoalMins');
         var userCompletedMinsLocal = localStorage.getItem('userCompletedMins');
 
-        localStorage.setItem('journalMap', JSON.stringify(Array.from(journalMap.entries())));
-        localStorage.setItem('goalMap', JSON.stringify(Array.from(goalMap.entries())));
+        //localStorage.setItem('journalMap', JSON.stringify(Array.from(journalMap.entries())));
+        //localStorage.setItem('goalMap', JSON.stringify(Array.from(goalMap.entries())));
 
-        /*
-        if (userGoalMinsLocal && userCompletedMinsLocal) {
-            userGoalMins = userGoalMinsLocal;
-            userCompletedMins = userCompletedMinsLocal;
+        // update current map with local storage if it exists
+        if (goalLocalMap) {
+            journalMap = goalLocalMap;
         }
-        else {
-            localStorage.setItem('userGoalMins', userGoalMins);
-            localStorage.setItem('userCompletedMins', userCompletedMins);
-        }*/
+
+        if (journalLocalMap) {
+            journalMap = journalLocalMap;
+        }
         
-        localStorage.clear();
+        //localStorage.clear();
 
         //console.log(formattedDate);
 
