@@ -71,11 +71,21 @@
             border-radius: 4px;
             cursor: pointer;
         }
+        .title{
+            margin-top: 5px; 
+            margin-bottom: 7px;
+        }
         .gallery {
             display: flex;
             justify-content: space-around;
             width: 100%;
             margin-top: 20px;
+        }
+        .topGallery{
+          display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-top: 10px;
         }
         .meditation {
             cursor: pointer;
@@ -95,6 +105,16 @@
             color: #333;
             font-size: 16px;
         }
+        hr{
+            border: 0;
+            clear:both;
+            display:block;
+            width: 96%;               
+            background-color:#7a7a7a;
+            height: 2px;
+            margin-top: 0px;
+            width: 50%;
+        }
     </style>
 </head>
 <body>  
@@ -112,8 +132,9 @@
       </span>
     </div>
   </div>
-    <h1>Choose a Meditation Session</h1>
-    <div class="gallery">
+    <h1 class = "title">Choose a Meditation Session</h1>
+    <hr>
+    <div class="topGallery">
         <!-- Beach Meditation -->
         <div class="meditation" onclick="location.href='meditationBeach.html'">
             <img src="images/beachBackground.webp" alt="Beach Meditation">
