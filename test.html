@@ -1,194 +1,248 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Goal and Journal Tracker</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Goal and Journal Tracker</title>
 
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: url('https://images.unsplash.com/photo-1708614896043-9ff9d03d641d?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=1080&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTcxMzc2OTI3Mw&ixlib=rb-4.0.3&q=80&w=1920') no-repeat center center fixed;
-    background-size: cover;
-    height: 100vh;
-    color: #333;
-  }
-  .user-bar {
-    color: transparent;
-    padding: 10px 20px;
-    position: relative;
-    display: inline-block;
-    z-index: 1000;
-  }
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: url('https://images.unsplash.com/photo-1708614896043-9ff9d03d641d?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=1080&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTcxMzc2OTI3Mw&ixlib=rb-4.0.3&q=80&w=1920') no-repeat center center fixed;
+      background-size: cover;
+      height: 100vh;
+      color: #333;
+    }
 
-  .avatar {
-    background-color: #ffffff;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    display: inline-block;
-    vertical-align: middle;
-    background-image: url('https://static.vecteezy.com/system/resources/previews/036/242/436/original/budha-icon-clipart-avatar-logotype-isolated-illustration-vector.jpg');
-    background-size: cover; /* Ensures the image covers the entire element */
-    background-position: center; /* Centers the image within the element */
-  }
+    .user-bar {
+      color: transparent;
+      padding: 10px 20px;
+      position: relative;
+      display: inline-block;
+      z-index: 1000;
+    }
 
-  .username {
-    color: #ffffff;
-    margin-left: 10px;
-    vertical-align: middle;
-    cursor: pointer;
-  }
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    left: 20px;
-    background-color: transparent;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1000;
-  }
-  .dropdown-content a {
-    color: transparent;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-  }
-  .user-info:hover .dropdown-content {
-    display: block;
-  }
-  .container {
-  width: 90%;
-  max-width: 600px;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  border-radius: 10px;
-  margin-top: 70px; /* Increased margin-top to push it below the fixed user bar */
-}
-  .progress-bar-container, .no-goal-message {
-    width: 100%;
-    margin: 20px 0;
-  }
-  .progress-bar-container {
-    background-color: #ddd;
-    border-radius: 5px;
-    height: 20px;
-  }
-  .progress-bar {
-    height: 100%;
-    background-color: #4CAF50;
-    width: 0%;
-    border-radius: 5px;
-  }
-  input, textarea, button, select {
-    margin: 5px;
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    width: 90%;
-  }
-  button {
-    cursor: pointer;
-    background-color: #5c67f2;
-    color: white;
-    width: auto;
-  }
-  .modal, .overlay {
-    display: none;
-    position: fixed;
-    z-index: 1001;
-  }
-  .overlay {
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-  }
-  .modal {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    width: 500px;
-  }
-  .modal-content, .modal-footer {
-    margin-bottom: 10px;
-  }
-  .modal-footer {
-    display: flex;
-    justify-content: space-between;
-  }
-  .journal-entry {
-    background: #fff;
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  textarea[readonly] {
-    background: #f0f0f0; /* Lighter background for read-only mode */
-    cursor: default;
-  }
-  .user-bar {
-    padding: 10px 20px;
-    position: fixed; /* Updated from relative to fixed */
-    top: 0; /* Ensures it's always at the top */
-    left: 0; /* Aligns it to the left edge */
-    width: 100%; /* Full width of the viewport */
-    background-color: transparent; /* Make sure the background is not transparent */
-    color: white; /* Text color for visibility */
-    z-index: 1000; /* High z-index to keep it above other elements */
-  }
+    .avatar {
+      background-color: #ffffff;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: inline-block;
+      vertical-align: middle;
+      background-image: url('https://static.vecteezy.com/system/resources/previews/036/242/436/original/budha-icon-clipart-avatar-logotype-isolated-illustration-vector.jpg');
+      background-size: cover;
+      /* Ensures the image covers the entire element */
+      background-position: center;
+      /* Centers the image within the element */
+    }
 
-  .avatar {
-    background-color: transparent;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    display: inline-block;
-    vertical-align: middle;
-  }
-  .username {
-    color: #ffffff;
-    margin-left: 10px;
-    vertical-align: middle;
-    cursor: pointer;
-  }
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    left: 20px;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1000;
-  }
-  .dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-  }
-  .user-info:hover .dropdown-content {
-    display: block;
-  }
-</style>
+    .username {
+      color: #ffffff;
+      margin-left: 10px;
+      vertical-align: middle;
+      cursor: pointer;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      left: 20px;
+      background-color: transparent;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+    }
+
+    .dropdown-content a {
+      color: transparent;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .user-info:hover .dropdown-content {
+      display: block;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 600px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      margin-top: 70px;
+      /* Increased margin-top to push it below the fixed user bar */
+    }
+
+    .progress-bar-container,
+    .no-goal-message {
+      width: 100%;
+      margin: 20px 0;
+    }
+
+    .progress-bar-container {
+      background-color: #ddd;
+      border-radius: 5px;
+      height: 20px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background-color: #4CAF50;
+      width: 0%;
+      border-radius: 5px;
+    }
+
+    input,
+    textarea,
+    button,
+    select {
+      margin: 5px;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: 90%;
+    }
+
+    button {
+      cursor: pointer;
+      background-color: #5c67f2;
+      color: white;
+      width: auto;
+    }
+
+    .modal,
+    .overlay {
+      display: none;
+      position: fixed;
+      z-index: 1001;
+    }
+
+    .overlay {
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 500px;
+    }
+
+    .modal-content,
+    .modal-footer {
+      margin-bottom: 10px;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .journal-entry {
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    textarea[readonly] {
+      background: #f0f0f0;
+      /* Lighter background for read-only mode */
+      cursor: default;
+    }
+
+    .user-bar {
+      padding: 10px 20px;
+      position: fixed;
+      /* Updated from relative to fixed */
+      top: 0;
+      /* Ensures it's always at the top */
+      left: 0;
+      /* Aligns it to the left edge */
+      width: 100%;
+      /* Full width of the viewport */
+      background-color: transparent;
+      /* Make sure the background is not transparent */
+      color: white;
+      /* Text color for visibility */
+      z-index: 1000;
+      /* High z-index to keep it above other elements */
+    }
+
+    .avatar {
+      background-color: transparent;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .username {
+      color: #ffffff;
+      margin-left: 10px;
+      vertical-align: middle;
+      cursor: pointer;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      left: 20px;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+    }
+
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .user-info:hover .dropdown-content {
+      display: block;
+    }
+
+    .mute-btn {
+      position: absolute;
+      right: 50px;
+      top: 10px;
+      background-color: black;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0"></script>
+
 </head>
+
 <div class="user-bar">
   <div class="user-info">
     <span class="avatar"></span>
@@ -202,95 +256,146 @@
       </div>
     </span>
   </div>
+  <!-- Mute/Unmute Icon Button -->
+  <button class="mute-btn">
+    <i class="fas fa-volume-up" id="sound-on"></i> <!-- Volume icon -->
+    <i class="fas fa-volume-mute" id="sound-off" style="display:none;"></i> <!-- Mute icon -->
+  </button>
 </div>
+
+
+
 <body>
 
-<div class="overlay" onclick="closeModal()"></div>
-<div class="modal">
-  <div id="modalContent"></div>
-  <div class="modal-footer">
-    <button onclick="closeModal()">Close</button>
+  <div class="overlay" onclick="closeModal()"></div>
+  <div class="modal">
+    <div id="modalContent"></div>
+    <div class="modal-footer">
+      <button onclick="closeModal()">Close</button>
+    </div>
   </div>
-</div>
-<div class="container">
-  <h2>Goals & Journal Tracker</h2>
-  <div class="progress-bar-container">
-    <div class="progress-bar"></div>
+  <div class="container">
+    <h2>Goals & Journal Tracker</h2>
+    <div class="progress-bar-container">
+      <div class="progress-bar"></div>
+    </div>
+    <div class="no-goal-message" style="display: none;">You can set your meditation goal by clicking the button below.</div>
+    <div id="goalSetting">
+      <!-- <input type="number" id="goalHours" placeholder="Hours" min="0" max="99" style="width: 80px;"> -->
+      <!-- <input type="number" id="goalMinutes" placeholder="Minutes" min="0" max="59" style="width: 80px;"> -->
+      <button onclick="openModal('setGoal')">Set New Goal</button>
+
+    </div>
+    <div id="goalsContainer" class="entry-container"></div>
+    <h3>Journal Entries</h3>
+    <button onclick="openModal('add')">Add Journal Entry</button>
+    <div id="journalsContainer" class="entry-container"></div>
   </div>
-  <div class="no-goal-message" style="display: none;">No goal set yet.</div>
-  <div id="goalSetting">
-    <input type="number" id="goalHours" placeholder="Hours" min="0" max="99" style="width: 80px;">
-    <input type="number" id="goalMinutes" placeholder="Minutes" min="0" max="59" style="width: 80px;">
-    <button onclick="setGoal()">Set Goal</button>
-  </div>
-  <div id="goalsContainer" class="entry-container"></div>
-  <h3>Journal Entries</h3>
-  <button onclick="openModal('add')">Add Journal Entry</button>
-  <div id="journalsContainer" class="entry-container"></div>
-</div>
-<audio autoplay loop>
-  <source src="./MeditationMusic/goal.mp3" type="audio/mpeg">
-  Your browser does not support the audio element.
-</audio>
-<script>
-  let currentGoal = null;
-  let journals = [];
+  <audio autoplay loop>
+    <source src="./MeditationMusic/goal.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  
+  <script>
+    let currentGoal = null;
+    let journals = [];
 
-  document.addEventListener("DOMContentLoaded", function() {
-    loadGoal();
-    loadJournals();
-  });
+    document.addEventListener("DOMContentLoaded", function () {
+      loadGoal();
+      loadJournals();
+      const muteButton = document.querySelector('.mute-btn');
+      const soundOnIcon = document.getElementById('sound-on');
+      const soundOffIcon = document.getElementById('sound-off');
+      const audio = document.querySelector('audio');
+
+      if (currentGoal === null) {
+        document.querySelector('.progress-bar-container').style.display = 'none';
+        document.querySelector('.no-goal-message').style.display = 'block';
+      }else{
+        document.getElementById('goalSetting').style.display = 'none';
+      }
+
+      muteButton.addEventListener('click', function () {
+        if (audio.muted) {
+          audio.muted = false;
+          soundOnIcon.style.display = '';
+          soundOffIcon.style.display = 'none';
+        } else {
+          audio.muted = true;
+          soundOnIcon.style.display = 'none';
+          soundOffIcon.style.display = '';
+        }
+      });
+    });
+
+    function triggerConfetti() {
+      confetti({  
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+    }
+
+    function setGoal() {
+      const name = document.getElementById('goalName').value;
+      const hours = parseInt(document.getElementById('goalHours').value, 10) || 0;
+      const minutes = parseInt(document.getElementById('goalMinutes').value, 10) || 0;
+      const totalSeconds = (hours * 3600 + minutes * 60) * 100;
+      
+      if (totalSeconds > 0 && name.trim() !== "") {
+        currentGoal = { name: name, goalTime: totalSeconds, meditatedTime: 0 };
+        localStorage.setItem('currentGoal', JSON.stringify(currentGoal));
+        displayGoal();
+        updateProgress();
+        closeModal();
+      } else {
+        alert('Please fill all fields correctly.');
+      }
+    }
 
 
-  function setGoal() {
-    const hours = parseInt(document.getElementById('goalHours').value) || 0;
-    const minutes = parseInt(document.getElementById('goalMinutes').value) || 0;
-    const totalSeconds = (hours * 3600 + minutes * 60) * 100;
-    if (totalSeconds > 0) {
-      currentGoal = { goalTime: totalSeconds, meditatedTime: 0 };
-      localStorage.setItem('currentGoal', JSON.stringify(currentGoal));
+
+
+    function loadGoal() {
+      const storedGoal = localStorage.getItem('currentGoal');
+      if (storedGoal) {
+        currentGoal = JSON.parse(storedGoal);
+        displayGoal();
+        updateProgress();
+      }
+    }
+
+    function displayGoal() {
+      const container = document.getElementById('goalsContainer');
+      container.innerHTML = '';
+      if (currentGoal) {
+        const entry = document.createElement('div');
+
+        if (Math.floor(currentGoal.goalTime / 360000) === 0){
+          entry.textContent = `${currentGoal.name}: Meditate for ${currentGoal.goalTime / 6000} minutes`;
+        }else{
+          entry.textContent = `${currentGoal.name}: Meditate for ${Math.floor(currentGoal.goalTime / 360000)} hour ${(currentGoal.goalTime / 6000) % 60} minutes`;
+        }
+        const deleteBtn = document.createElement('button');
+        document.getElementById('goalSetting').style.display = 'none';
+        deleteBtn.textContent = 'Delete Goal';
+        deleteBtn.onclick = function() { deleteGoal(); };
+        entry.appendChild(deleteBtn);
+        container.appendChild(entry);
+      }
+    }
+
+
+    function deleteGoal() {
+      localStorage.removeItem('meditatedTime')
+      localStorage.removeItem('currentGoal');
+      currentGoal = null;
       displayGoal();
       updateProgress();
-      document.getElementById('goalSetting').style.display = 'none';
-    }
-  }
-
-  function loadGoal() {
-    const storedGoal = localStorage.getItem('currentGoal');
-    if (storedGoal) {
-      currentGoal = JSON.parse(storedGoal);
-      displayGoal();
-      updateProgress();
-    }
-  }
-
-  function displayGoal() {
-    const container = document.getElementById('goalsContainer');
-    container.innerHTML = '';
-    if (currentGoal) {
-      const entry = document.createElement('div');
-      entry.textContent = `Goal: ${Math.floor(currentGoal.goalTime / 360000)}h ${(currentGoal.goalTime / 6000) % 60}m`;
-      const deleteBtn = document.createElement('button');
-      deleteBtn.textContent = 'Delete Goal';
-      deleteBtn.onclick = function() { deleteGoal(); };
-      entry.appendChild(deleteBtn);
-      container.appendChild(entry);
-      document.getElementById('goalSetting').style.display = 'none';
-    } else {
       document.getElementById('goalSetting').style.display = 'block';
     }
-  }
 
-  function deleteGoal() { 
-    localStorage.removeItem('meditatedTime')
-    localStorage.removeItem('currentGoal');
-    currentGoal = null;
-    displayGoal();
-    updateProgress();
-    document.getElementById('goalSetting').style.display = 'block';
-  }
-
-  function updateProgress() {
+    function updateProgress() {
       let meditatedTime = parseInt(localStorage.getItem('meditatedTime'), 10) || 0;
       console.log("Meditated Time (seconds):", meditatedTime);
       console.log("Current Goal:", currentGoal);
@@ -303,84 +408,100 @@
         progressBar.textContent = `${Math.floor(progressPercentage)}%`;
         document.querySelector('.progress-bar-container').style.display = 'block';
         document.querySelector('.no-goal-message').style.display = 'none';
+
+        if (progressPercentage === 100){
+          // have a confetti animation
+          triggerConfetti();
+        }
       } else {
         document.querySelector('.progress-bar-container').style.display = 'none';
         document.querySelector('.no-goal-message').style.display = 'block';
       }
-  }
-
-  function loadJournals() {
-    const storedJournals = localStorage.getItem('journals');
-    if (storedJournals) {
-      journals = JSON.parse(storedJournals);
-      displayJournals();
     }
-  }
 
-  function openModal(mode, index) {
-    const modalContent = document.getElementById('modalContent');
-    const modalFooter = document.querySelector('.modal-footer');
-    if (mode === 'add') {
-      modalContent.innerHTML = `
+    function loadJournals() {
+      const storedJournals = localStorage.getItem('journals');
+      if (storedJournals) {
+        journals = JSON.parse(storedJournals);
+        displayJournals();
+      }
+    }
+
+    function openModal(mode, index) {
+      const modalContent = document.getElementById('modalContent');
+      const modalFooter = document.querySelector('.modal-footer');
+      if (mode === 'add') {
+        modalContent.innerHTML = `
         <input type="text" id="journalTitle" placeholder="Title">
         <input type="date" id="journalDate" value="${new Date().toISOString().split('T')[0]}">
         <textarea id="journalText" placeholder="Journal content" style="width:95%; height:150px;"></textarea>
       `;
-      modalFooter.innerHTML = `
+        modalFooter.innerHTML = `
         <button onclick="closeModal()">Close</button>
         <button onclick="addJournal()">Save Journal</button>
       `;
-    } else if (mode === 'view') {
-      const journal = journals[index];
-      modalContent.innerHTML = `
+      } else if (mode === 'view') {
+        const journal = journals[index];
+        modalContent.innerHTML = `
         <div><strong>Date:</strong> ${journal.date}</div>
         <div><strong>Title:</strong> ${journal.title}</div>
         <textarea readonly style="width:95%; height:150px; background: #f0f0f0; cursor: default;">${journal.content}</textarea>
       `;
-      modalFooter.innerHTML = `
+        modalFooter.innerHTML = `
         <button onclick="closeModal()">Close</button>
         <button onclick="deleteJournal(${index})">Delete Journal</button>
       `;
+      }else if (mode === 'setGoal'){
+        modalContent.innerHTML = `
+          <input type="text" id="goalName" placeholder="Goal Name" style="width:90%;">
+          <input type="number" id="goalHours" placeholder="Hours" min="0" max="99" style="width:90%;">
+          <input type="number" id="goalMinutes" placeholder="Minutes" min="0" max="59" style="width:90%;">
+        `;
+        modalFooter.innerHTML = `
+          <button onclick="closeModal()">Close</button>
+          <button onclick="setGoal()">Set Goal</button>
+        `;
+      }
+      document.querySelector('.modal').style.display = 'block';
+      document.querySelector('.overlay').style.display = 'block';
     }
-    document.querySelector('.modal').style.display = 'block';
-    document.querySelector('.overlay').style.display = 'block';
-  }
 
-  function closeModal() {
-    document.querySelector('.modal').style.display = 'none';
-    document.querySelector('.overlay').style.display = 'none';
-  }
-
-  function addJournal() {
-    const title = document.getElementById('journalTitle').value;
-    const date = document.getElementById('journalDate').value;
-    const content = document.getElementById('journalText').value;
-    if (title && date && content) {
-      journals.push({ title, date, content });
-      localStorage.setItem('journals', JSON.stringify(journals));
-      closeModal();
-      displayJournals();
+    function closeModal() {
+      document.querySelector('.modal').style.display = 'none';
+      document.querySelector('.overlay').style.display = 'none';
     }
-  }
 
-  function displayJournals() {
-    const container = document.getElementById('journalsContainer');
-    container.innerHTML = '';
-    journals.forEach((journal, index) => {
-      const entry = document.createElement('div');
-      entry.className = 'journal-entry';
-      entry.innerHTML = `<div class="journal-text">${journal.date} - ${journal.title}</div>
+    function addJournal() {
+      const title = document.getElementById('journalTitle').value;
+      const date = document.getElementById('journalDate').value;
+      const content = document.getElementById('journalText').value;
+      if (title && date && content) {
+        journals.push({ title, date, content });
+        localStorage.setItem('journals', JSON.stringify(journals));
+        closeModal();
+        displayJournals();
+      }
+    }
+
+    function displayJournals() {
+      const container = document.getElementById('journalsContainer');
+      container.innerHTML = '';
+      journals.forEach((journal, index) => {
+        const entry = document.createElement('div');
+        entry.className = 'journal-entry';
+        entry.innerHTML = `<div class="journal-text">${journal.date} - ${journal.title}</div>
         <button onclick="openModal('view', ${index})">View</button>`;
-      container.appendChild(entry);
-    });
-  }
+        container.appendChild(entry);
+      });
+    }
 
-  function deleteJournal(index) {
-    journals.splice(index, 1);
-    localStorage.setItem('journals', JSON.stringify(journals));
-    displayJournals();
-    closeModal();
-  }
-</script>
+    function deleteJournal(index) {
+      journals.splice(index, 1);
+      localStorage.setItem('journals', JSON.stringify(journals));
+      displayJournals();
+      closeModal();
+    }
+  </script>
 </body>
+
 </html>
